@@ -1,0 +1,91 @@
+/* ============================================================
+   TOKENS — SPACING
+   Escala base 4px. Todo el espaciado del sitio sale de aquí.
+   ============================================================ */
+
+:root {
+    /* ── Escala base (4px) ───────────────────────────────────── */
+    --space-1: 0.25rem;
+    /*   4px */
+    --space-2: 0.5rem;
+    /*   8px */
+    --space-3: 0.75rem;
+    /*  12px */
+    --space-4: 1rem;
+    /*  16px */
+    --space-5: 1.25rem;
+    /*  20px */
+    --space-6: 1.5rem;
+    /*  24px */
+    --space-8: 2rem;
+    /*  32px */
+    --space-10: 2.5rem;
+    /*  40px */
+    --space-12: 3rem;
+    /*  48px */
+    --space-16: 4rem;
+    /*  64px */
+    --space-20: 5rem;
+    /*  80px */
+    --space-24: 6rem;
+    /*  96px */
+    --space-32: 8rem;
+    /* 128px */
+
+    /* ── Gutters horizontales (extraídos de la referencia) ───── */
+    --gutter-mobile: 15px;
+    --gutter-tablet: 35px;
+    --gutter-desktop: 100px;
+    --gutter-fluid: calc(50vw - 720px);
+    /* centra en 1440px+ */
+
+    /* ── Gaps de flex/grid ───────────────────────────────────── */
+    --gap-xs: 10px;
+    --gap-sm: 20px;
+    --gap-md: 30px;
+    /* entre columnas half                   */
+    --gap-lg: 60px;
+    /* formulario tablet                     */
+    --gap-xl: 75px;
+    /* entre créditos                        */
+    --gap-2xl: 150px;
+    /* separación entre créditos desktop     */
+
+    /* ── Secciones verticales ────────────────────────────────── */
+    --section-y-mobile: 80px;
+    --section-y-tablet: 100px;
+    --section-y-desktop: 150px;
+
+    /* ── Módulos internos (ej: .m-album) ─────────────────────── */
+    --module-y-mobile: 40px 0 80px;
+    --module-y-desktop: 100px 0;
+
+    /* ── Radios de borde ─────────────────────────────────────── */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+
+    /* ── Componentes específicos ─────────────────────────────── */
+    --header-logo-top-mobile: 10px;
+    --header-logo-top-desktop: 15px;
+    --header-burger-top-mobile: 15px;
+    --header-burger-right-mobile: 15px;
+    --header-burger-top-desktop: 28px;
+    --header-burger-right-desktop: 28px;
+
+    --form-input-height: 50px;
+    --form-textarea-height: 200px;
+    --form-field-mb: 50px;
+    --form-button-height: 60px;
+    --form-button-min-w: 250px;
+
+    --footer-height-mobile: 325px;
+    --footer-height-tablet: 450px;
+    --footer-credits-bottom: 30px;
+
+
+    --gallery-peek: 20vw;
+    --hero-width: calc(100vw - var(--gallery-peek));
+    /* Automáticamente 80vw */
+}

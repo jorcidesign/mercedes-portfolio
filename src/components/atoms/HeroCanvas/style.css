@@ -1,0 +1,47 @@
+/* ============================================================
+   ÁTOMO — HERO CANVAS
+   Fondo WebGL de la pantalla inicial
+   ============================================================ */
+
+/* 1. CAJA CONTENEDORA (Geometría y Posición en la Malla) */
+.a-hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    /* MÓVIL: Sizing explícito (100% ancho, 50% del viewport dinámico) */
+    width: 100vw;
+    height: calc(var(--vh) * 0.5);
+
+    /* Tokens del sistema */
+    z-index: var(--z-content);
+    background-color: var(--c-bg);
+    overflow: hidden;
+    /* Cierra la caja, nada sale de aquí */
+}
+
+/* 2. CAJA DE CONTENIDO (El motor de render) */
+.a-hero-canvas__webgl {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    /* VITAL EN AWWWARDS: Si el canvas es fondo y no se toca, 
+       pointer-events: none evita que bloquee los clics en los textos */
+    pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BREAKPOINTS
+───────────────────────────────────────────────────────────── */
+
+/* Usamos 'em' según la convención de accesibilidad de tu _breakpoints.css */
+@media (min-width: 769px) {
+
+    /* 768px */
+    .a-hero-canvas {
+        /* DESKTOP: Sizing explícito (Mitad del ancho, 100% alto dinámico) */
+        width: 50vw;
+        height: var(--vh);
+    }
+}

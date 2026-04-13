@@ -1,0 +1,69 @@
+/* ============================================================
+   ORGANISMO — WORK GALLERY SECTION
+   ============================================================ */
+
+.o-work-gallery {
+    width: 100%;
+    padding: var(--space-10) var(--gutter-mobile, 1.5rem);
+    background-color: transparent;
+}
+
+.o-work-gallery__wrapper {
+    width: 100%;
+    max-width: var(--max-width, 1440px);
+    margin: 0 auto;
+}
+
+/* El Contenedor de las dos columnas */
+.o-work-gallery__columns {
+    display: grid;
+    /* Móvil: 1 sola columna (la derecha se pondrá debajo de la izquierda) */
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    width: 100%;
+}
+
+/* La columna individual (Apila las tarjetas una sobre otra) */
+.o-work-gallery__col {
+    display: flex;
+    flex-direction: column;
+    /* El espacio vertical entre tarjetas de la misma columna */
+    gap: var(--space-8);
+}
+
+.o-work-gallery__item {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+/* ============================================
+   BREAKPOINTS — DESKTOP
+   ============================================ */
+@media (min-width: 48em) {
+    .o-work-gallery {
+        padding: var(--space-20) var(--gutter-desktop, 2.5rem);
+    }
+
+    .o-work-gallery__columns {
+        /* Desktop: 2 columnas perfectas y simétricas */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        /* 🔥 IMPORTANTE: align-items start hace que las columnas no se fuercen
+           a medir lo mismo de alto, permitiendo caídas asimétricas. */
+        align-items: flex-start;
+
+        /* Separación horizontal entre la columna Izq y Der */
+        column-gap: 8vw;
+    }
+
+    .o-work-gallery__col {
+        /* Espacio vertical entre los proyectos de la misma columna en desktop */
+        gap: 15vh;
+    }
+
+    /* 🔥 EL TOQUE ANTI-PATRÓN: Empujamos toda la columna derecha hacia abajo */
+    .o-work-gallery__col--right {
+        margin-top: 15vh;
+    }
+}

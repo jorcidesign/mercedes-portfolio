@@ -1,0 +1,55 @@
+/* ============================================
+   PARALLAX TITLE (Átomo)
+   ============================================ */
+
+.a-parallax-title {
+    /* Usamos tu token de tipografía colosal (clamp) */
+    font-size: var(--text-hero);
+
+    /* Sin altura de línea fantasma para poder apilarlos perfectamente */
+    line-height: var(--lh-none);
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: block;
+
+    /* El color lo hereda de la sección en la que se coloque (blanco o negro) */
+    color: currentColor;
+}
+
+.a-parallax-title__inner {
+    display: inline-block;
+    will-change: transform;
+    /* Truco Awwwards: Evita que el texto parpadee (flicker) al moverse con el scroll */
+    backface-visibility: hidden;
+}
+
+/* ── Variantes Tipográficas ── */
+.a-parallax-title--sans {
+    font-family: var(--font-sans);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-normal);
+}
+
+.a-parallax-title--serif {
+    font-family: var(--font-display);
+    font-weight: var(--fw-regular);
+    letter-spacing: var(--ls-tight);
+}
+
+.a-parallax-title--italic {
+    font-style: italic;
+}
+
+/* Agrega estas 3 reglas al style.css existente de ParallaxTitle */
+
+.a-parallax-title--left {
+    text-align: left;
+}
+
+.a-parallax-title--right {
+    text-align: right;
+}
+
+.a-parallax-title--center {
+    text-align: center;
+}

@@ -1,0 +1,103 @@
+/* ============================================================
+   ÁTOMO — SPLIT MENU LINK
+   ============================================================ */
+
+.a-split-link {
+    display: block;
+    width: 100%;
+
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 5.5rem);
+    font-weight: var(--fw-regular);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--c-white);
+
+    /* 🔥 FIX: Volvemos a la compresión asfixiante y elegante */
+    line-height: 0.85;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.a-split-link__word {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.a-split-link__char-wrap {
+    overflow: hidden;
+    display: block;
+    perspective: 400px;
+}
+
+/* ============================================
+   ANIMACIÓN DE ENTRADA (Rotate 3D)
+   ============================================ */
+.a-split-link__entrance {
+    display: block;
+    transform: translate(0%, 110%) rotateX(-35deg);
+    transform-origin: bottom center;
+    transition: transform 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: transform;
+}
+
+.o-nav-drawer.is-open .a-split-link__entrance {
+    transform: translate(0%, 0%) rotateX(0deg);
+}
+
+/* ============================================
+   ANIMACIÓN DE HOVER (Slot Machine)
+   ============================================ */
+.a-split-link__hover {
+    display: block;
+    position: relative;
+    transition: transform 0.5s cubic-bezier(0.56, 0, 0.24, 1);
+    transition-delay: calc(var(--char-index) * 0.045s);
+}
+
+.a-split-link__hover::after {
+    content: attr(data-char);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: var(--c-text-muted);
+}
+
+.a-split-link:hover .a-split-link__hover {
+    transform: translateY(-100%);
+}
+
+/* ============================================
+   BREAKPOINTS
+   ============================================ */
+/* TABLET (Hasta 1024px inclusive) */
+@media (max-width: 64em) {
+    .a-split-link {
+        /* 🔥 FIX ALTURA MAGISTRAL: 
+           Si la pantalla es ancha (10vw), pero muy bajita (11vh), 
+           el navegador elegirá automáticamente el valor más pequeño.
+           Así nunca se desborda en un Nest Hub o celular horizontal. */
+        font-size: min(10vw, 11vh);
+    }
+}
+
+/* MÓVIL (Hasta 816px inclusive) */
+@media (max-width: 51em) {
+    .a-split-link {
+        /* Lo mismo para móviles: Si lo volteas (landscape), la letra no explota */
+        font-size: min(14vw, 12vh);
+    }
+}
+
+
+/* Bloqueo total visual y atenuación para el enlace de la página actual */
+.a-split-link.is-active {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.3;
+    /* Hace que el texto se vea apagado para indicar que ya estás ahí */
+}

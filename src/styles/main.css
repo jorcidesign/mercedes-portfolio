@@ -1,0 +1,22 @@
+/* ============================================================
+   MAIN — Punto de entrada del Design System
+   Importa en este orden exacto (tokens antes que base).
+   ============================================================ */
+
+/* 1. Tokens — Variables CSS puras, sin efectos secundarios */
+@import './tokens/_breakpoints.css';
+@import './tokens/_colors.css';
+@import './tokens/_typography.css';
+@import './tokens/_spacing.css';
+@import './tokens/_animation.css';
+@import './tokens/_layout.css';
+
+/* 2. Base — Reset y setup global que usa los tokens */
+@import './base/_reset.css';
+@import './base/_smooth-scroll.css';
+
+/* 3. Aquí van tus componentes cuando los crees */
+/* @import './components/_nav.css';      */
+/* @import './components/_hero.css';     */
+/* @import './components/_gallery.css';  */
+/* @import './components/_footer.css';   */

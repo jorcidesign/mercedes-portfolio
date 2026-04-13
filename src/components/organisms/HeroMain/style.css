@@ -1,0 +1,100 @@
+/* ============================================
+   HERO MAIN (Organismo)
+   ============================================ */
+
+/* 1. CAPA EXTERIOR: Límites visuales */
+.o-hero-main {
+    /* Usamos el token de Viewport dinámico (100dvh) para evitar bugs en Safari iOS */
+    height: var(--vh, 100vh);
+    width: 100%;
+    background-color: var(--c-white);
+    color: var(--c-black);
+    overflow: hidden;
+    /* Cortamos lo que el parallax empuje fuera */
+    display: flex;
+    align-items: center;
+    /* Centramos el contenedor maestro verticalmente */
+}
+
+/* 2. CAPA INTERIOR: La Malla Maestra (¡IGUAL QUE LA GALERÍA!) */
+.o-hero-main__container {
+    width: 100%;
+    max-width: var(--max-width, 1440px);
+    margin: 0 auto;
+
+    /* 🔥 EL SECRETO DE LA AGENCIA: Usa exactamente la misma pared lateral que la galería */
+    padding: 0 var(--gutter-desktop);
+}
+
+/* 3. CAPA DE CONTENIDO: Distribución de los textos */
+.o-hero-main__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* ============================================
+   ESTILOS DE LOS SLOTS (Asimetría)
+   ============================================ */
+
+/* Al pasarle estas clases al Átomo mediante customClass, 
+   controlamos su posición sin tocar su código interno */
+
+.o-hero-main__title-top {
+    margin-left: 0;
+    z-index: 2;
+    /* Siempre por encima */
+}
+
+.o-hero-main__title-bottom {
+    margin-left: 0;
+    z-index: 1;
+    /* Por debajo del ampersand (&) */
+}
+
+/* ============================================
+   MEDIA QUERIES (Sincronizadas con tus tokens)
+   ============================================ */
+
+/* MÓVIL */
+@media (max-width: 51em) {
+    .o-hero-main__container {
+        padding: 0 var(--gutter-mobile);
+    }
+}
+
+/* TABLET Y DESKTOP */
+@media (min-width: 48em) {
+    .o-hero-main__container {
+        padding: 0 var(--gutter-tablet);
+    }
+
+    /* Replicamos tu diseño original asimétrico, pero ahora protegido por los gutters */
+    .o-hero-main__title-top {
+        margin-left: -15vw;
+        margin-bottom: -2vw;
+        /* Pegado al texto de abajo */
+    }
+
+    .o-hero-main__title-bottom {
+        margin-left: 15vw;
+    }
+}
+
+/* DESKTOP GRANDE */
+@media (min-width: 64em) {
+    .o-hero-main__container {
+        padding: 0 var(--gutter-desktop);
+    }
+
+    /* En pantallas muy grandes, evitamos que los VW se salgan del container */
+    .o-hero-main__title-top {
+        margin-left: -10vw;
+    }
+
+    .o-hero-main__title-bottom {
+        margin-left: 10vw;
+    }
+}

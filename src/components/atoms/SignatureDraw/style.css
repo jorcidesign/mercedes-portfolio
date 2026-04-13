@@ -1,0 +1,37 @@
+/* src/components/atoms/SignatureDraw/style.css */
+
+.a-signature-draw {
+    display: block;
+
+    /* 🔥 TAMAÑO FLUIDO: En móvil será de 150px, en desktop grande hasta 350px */
+    width: clamp(150px, 20vw, 350px);
+    height: auto;
+
+    /* El color blanco que heredarán los paths */
+    color: #ffffff;
+
+    /* Empezamos un poco más pequeños y apagados */
+    opacity: 0.8;
+    transform: scale(0.95);
+    transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1),
+        opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+
+    will-change: transform, opacity;
+}
+
+.a-signature-draw__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Efecto inicial cuando arranca la animación (si lo deseas) */
+.a-signature-draw.is-animating {
+    opacity: 1;
+}
+
+/* 🔥 EFECTO FINAL: Cuando termina de dibujarse, "aterriza" con su tamaño real */
+.a-signature-draw.is-complete {
+    opacity: 1;
+    transform: scale(1);
+}

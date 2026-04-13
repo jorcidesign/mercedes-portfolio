@@ -1,0 +1,130 @@
+/* ============================================================
+   ÁTOMO — NAV BUTTON
+   ============================================================ */
+
+.a-nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Conexión a Tokens de Tipografía */
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    /* 11px uppercase - estándar Awwwards */
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+
+    /* Conexión a Tokens de Animación */
+    transition: transform var(--dur-fast) var(--ease-spring),
+        background-color var(--dur-base) var(--ease-out-expo),
+        color var(--dur-base) var(--ease-out-expo);
+    will-change: transform;
+    cursor: pointer;
+    display: inline-flex;
+    /* o inline-block, para que respete paddings */
+    text-decoration: none;
+    /* Mata el subrayado de los <a> */
+    color: inherit;
+    /* Evita que se ponga azul por defecto */
+}
+
+/* FÍSICA DEL HOVER: Se comprime ligeramente con efecto resorte */
+.a-nav-button:hover {
+    transform: scale(0.95);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   VARIANTE 1: OUTLINE
+───────────────────────────────────────────────────────────── */
+.a-nav-button--outline {
+    /* Padding con tokens: ~6px 20px */
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid currentColor;
+}
+
+.a-nav-button--outline.theme-light:hover {
+    background-color: var(--c-white);
+    color: var(--c-black);
+}
+
+.a-nav-button--outline.theme-dark:hover {
+    background-color: var(--c-black);
+    color: var(--c-white);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   VARIANTE 2: BRACKET
+───────────────────────────────────────────────────────────── */
+.a-nav-button--bracket {
+    /* Padding con tokens: ~4px 12px */
+    padding: var(--space-1) var(--space-3);
+    position: relative;
+}
+
+/* Los corchetes animables */
+.a-nav-button--bracket::before,
+.a-nav-button--bracket::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    border: 1px solid currentColor;
+    z-index: 0;
+    /* Por debajo del texto */
+    transition: width var(--dur-base) var(--ease-out-expo),
+        background-color var(--dur-base) var(--ease-out-expo);
+}
+
+.a-nav-button--bracket::before {
+    left: 0;
+    border-right: none;
+}
+
+.a-nav-button--bracket::after {
+    right: 0;
+    border-left: none;
+}
+
+/* Subrayado y posición del texto */
+.a-nav-button--bracket .text-inner {
+    position: relative;
+    z-index: 1;
+    /* VITAL: Por encima de los corchetes que se rellenan */
+    border-bottom: 1px solid currentColor;
+    padding: 0 var(--space-1);
+    transition: color var(--dur-base) var(--ease-out-expo),
+        border-color var(--dur-base) var(--ease-out-expo);
+}
+
+/* 🔥 LA SOLUCIÓN AL BUG DEL HOVER 🔥 */
+.a-nav-button--bracket:hover::before,
+.a-nav-button--bracket:hover::after {
+    width: 50%;
+    /* Rellena con el color actual del botón (blanco o negro según el tema) */
+    background-color: currentColor;
+}
+
+/* Solo le cambiamos el color al texto para que contraste, el botón no muta */
+.a-nav-button--bracket.theme-light:hover .text-inner {
+    color: var(--c-black);
+    border-color: transparent;
+    /* Borramos el subrayado al rellenar el fondo */
+}
+
+.a-nav-button--bracket.theme-dark:hover .text-inner {
+    color: var(--c-white);
+    border-color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TEMAS GLOBALES
+───────────────────────────────────────────────────────────── */
+.theme-light {
+    color: var(--c-white);
+}
+
+.theme-dark {
+    color: var(--c-black);
+}

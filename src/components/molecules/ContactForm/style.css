@@ -1,0 +1,36 @@
+/* ============================================================
+   MOLÉCULA — CONTACT FORM
+   ============================================================ */
+.m-contact-form {
+    width: 100%;
+}
+
+.m-contact-form__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Móvil: 1 sola columna */
+    gap: var(--space-4);
+}
+
+.m-contact-form__action {
+    margin-top: var(--space-8);
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* ============================================
+   BREAKPOINTS — DESKTOP
+   ============================================ */
+@media (min-width: 48em) {
+    .m-contact-form__grid {
+        /* Desktop: 2 columnas */
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 4vw;
+        row-gap: var(--space-6);
+    }
+
+    /* Forzamos a que Email y Mensaje ocupen todo el ancho */
+    .m-contact-form__full-width {
+        grid-column: 1 / -1;
+    }
+}

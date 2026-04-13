@@ -1,0 +1,141 @@
+/* ============================================
+   WORK GALLERY SCROLL
+   Variables controladas desde JS via style.setProperty
+   ============================================ */
+
+.o-work-gallery-scroll {
+    /* Valor por defecto, pero el JS lo sobreescribe al instante */
+    --anillo-width: 100px;
+    position: relative;
+    width: 100%;
+    background-color: var(--c-white, #ffffff);
+    z-index: 1;
+}
+
+/* ── Sticky Box: el tubo general ── */
+.o-work-gallery-scroll__sticky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--c-white, #ffffff);
+    z-index: 1;
+    will-change: transform;
+}
+
+/* ── El Anillo Fijo: el borde derecho siempre visible ── */
+.o-work-gallery-scroll__anillo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--anillo-width);
+    height: 100vh;
+    z-index: 4;
+    pointer-events: none;
+    /* Para no bloquear clics en las fotos */
+
+    /* El fondo blanco sólido del anillo */
+    background-color: var(--c-white, #ffffff);
+
+    /* 🔥 DEBUG: Si quieres ver el anillo físicamente, descomenta esto:
+    background-color: rgba(255, 0, 0, 0.15);
+    border-left: 2px dashed red;
+    */
+}
+
+/* ── La Tapa (El Hero) ── */
+#work-gallery-hero-slot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* La matemática perfecta: El Hero ocupa todo MENOS el anillo */
+    width: calc(100vw - var(--anillo-width));
+    height: 100vh;
+    /* background-color: var(--c-white, #ffffff); */
+    z-index: 10;
+    will-change: transform;
+}
+
+/* ============================================
+   GALLERY TRACK (el tren horizontal)
+   ============================================ */
+
+.o-gallery-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 5;
+    will-change: transform;
+}
+
+.o-gallery-track__files {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 100vh;
+    gap: 12vw;
+    /* El margin-left ya se setea inline desde GalleryTrack.ts (calc(100vw - anilloWidth)) */
+}
+
+/* ── Vagones ── */
+.o-gallery-track__item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Solo definimos la altura. El ancho será automático sin deformarse */
+.o-gallery-track__item--main,
+.o-gallery-track__item--regular {
+    height: 85vh;
+}
+
+.o-gallery-track__item--small {
+    height: 55vh;
+}
+
+.o-gallery-track__item--main .a-image-reveal,
+.o-gallery-track__item--regular .a-image-reveal,
+.o-gallery-track__item--small .a-image-reveal,
+.o-gallery-track__item--main .a-image-reveal__frame,
+.o-gallery-track__item--regular .a-image-reveal__frame,
+.o-gallery-track__item--small .a-image-reveal__frame,
+.o-gallery-track__item--main .a-image-reveal__parallax,
+.o-gallery-track__item--regular .a-image-reveal__parallax,
+.o-gallery-track__item--small .a-image-reveal__parallax {
+    height: 100%;
+    width: auto;
+}
+
+.o-gallery-track__item--main .a-image-reveal__img,
+.o-gallery-track__item--regular .a-image-reveal__img,
+.o-gallery-track__item--small .a-image-reveal__img {
+    height: 100%;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    display: block;
+}
+
+/* ============================================
+   MÓVIL
+   ============================================ */
+@media (max-width: 48em) {
+
+    /* El --anillo-width se maneja desde JS, pero ajustamos los altos/gaps */
+    .o-gallery-track__files {
+        gap: 8vw;
+    }
+
+    .o-gallery-track__item--main,
+    .o-gallery-track__item--regular {
+        height: 75vh;
+    }
+
+    .o-gallery-track__item--small {
+        height: 55vh;
+    }
+}

@@ -1,0 +1,45 @@
+/* ============================================================
+   ÁTOMO — LOGO ISOTYPE
+   ============================================================ */
+
+/* 1. CAJA CONTENEDORA (Wrapper flexible) */
+.a-logo-isotype {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* El layout se lo dictará el Header, el átomo solo llena su hueco */
+    width: 100%;
+    height: 100%;
+
+    /* 🔥 Transición conectada a los Design Tokens */
+    transition: color var(--dur-slow) var(--ease-in-out-circ);
+    /* 🔥 NUEVO: Comportamiento de enlace */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 2. CAJA DE CONTENIDO (SVG) */
+.a-logo-isotype__svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ESTADOS (Dictados por el ThemeStore)
+───────────────────────────────────────────────────────────── */
+
+.a-logo-isotype.theme-light {
+    color: var(--c-white);
+}
+
+.a-logo-isotype.theme-dark {
+    color: var(--c-black);
+}
+
+/* Bloqueo del logo cuando ya estamos en HOME */
+.a-logo-isotype.is-active {
+    pointer-events: none;
+    cursor: default;
+}

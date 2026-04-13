@@ -1,0 +1,169 @@
+.o-hero-intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: var(--z-intro);
+    background-color: #000;
+    overflow: hidden;
+    will-change: opacity, transform;
+    pointer-events: auto;
+}
+
+.o-hero-intro.is-hidden {
+    pointer-events: none;
+}
+
+.o-hero-intro__canvas-mount {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.o-hero-intro__text-mount {
+    position: absolute;
+    inset: -1% 0%;
+    z-index: 2;
+    transform: translateY(8vh);
+    margin-top: 8vh;
+}
+
+/* ============================================================
+   FIRMA ASTORIMA
+   ============================================================ */
+
+.o-hero-intro__signature-mount {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+
+    right: 5vw;
+    top: 55vh;
+    width: 40vw;
+
+    transform: rotate(-15deg);
+    transform-origin: center left;
+}
+
+.o-hero-intro__signature-mount .a-signature-draw {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+/* ============================================================
+   FLECHA DE SCROLL
+   ============================================================ */
+
+.o-hero-intro__arrow-mount {
+    position: absolute;
+    z-index: 4;
+    pointer-events: none;
+
+    left: 61.8vw;
+    bottom: 10.8vh;
+
+    transform: translateX(-50%);
+
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: opacity;
+}
+
+.o-hero-intro.is-arrow-visible .o-hero-intro__arrow-mount {
+    opacity: 1;
+}
+
+/* ============================================================
+   TEXTO FOOTER (make up artists / and hairstyle)
+   ============================================================ */
+
+.o-hero-intro__footer-text {
+    position: absolute;
+    z-index: 4;
+    pointer-events: none;
+
+    left: clamp(85.6vw, 85.6vw + (93.7 - 85.6) * ((1578px - 100vw) / (1578 - 852)), 93.7vw);
+    top: 83.9vh;
+
+    width: clamp(83px, 8.2vw, 122px);
+
+    transform: translateX(-50%);
+    text-align: center;
+
+    opacity: 0;
+    transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: opacity;
+}
+
+.o-hero-intro__footer-text p {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.o-hero-intro__footer-text .line {
+    display: block;
+}
+
+.o-hero-intro.is-arrow-visible .o-hero-intro__footer-text {
+    opacity: 1;
+}
+
+/* ============================================================
+   RESPONSIVE — mobile estricto (< 769px, ipad mini queda en desktop)
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .o-hero-intro__text-mount {
+        inset: 0;
+        transform: none;
+        margin: 0 0.5rem;
+    }
+
+    .o-hero-intro__signature-mount {
+        right: auto;
+        top: auto;
+        left: 50%;
+        bottom: 14vh;
+        width: 75vw;
+        transform: translateX(-50%) rotate(-8deg);
+        transform-origin: center center;
+    }
+
+    .o-hero-intro__arrow-mount {
+        left: 50%;
+        bottom: 28vh;
+        /* antes 33vh — baja para dar aire al canvas */
+        transform: translateX(-50%);
+    }
+
+    .o-hero-intro__footer-text {
+        right: auto;
+        top: auto;
+        left: 50%;
+        bottom: 6vh;
+        transform: translateX(-50%);
+        text-align: center;
+        width: auto;
+        white-space: nowrap;
+    }
+
+    .o-hero-intro__footer-text .line {
+        display: inline;
+    }
+
+    .o-hero-intro__footer-text .line:nth-child(2)::after {
+        content: '\A';
+        white-space: pre;
+    }
+
+    .o-hero-intro__footer-text p {
+        white-space: normal;
+    }
+}

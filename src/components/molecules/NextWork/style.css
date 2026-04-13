@@ -1,0 +1,119 @@
+/* ============================================
+   NEXT WORK (Molécula Final COMPRIMIDA)
+   ============================================ */
+.m-next-work {
+    display: flex;
+    align-items: center;
+    /* 🔥 ADIÓS A LOS 100vw. Que la molécula mida solo lo que miden sus hijos */
+    width: max-content;
+
+    height: 100vh;
+    background-color: var(--c-white, #ffffff);
+    text-decoration: none;
+    color: var(--c-black, #000000);
+    flex-shrink: 0;
+    position: relative;
+
+    /* Le damos un poco de margen izquierdo para separarlo de los créditos */
+    margin-left: 10vw;
+}
+
+/* ── ZONA DE TEXTO ── */
+.m-next-work__text-area {
+    /* 🔥 LA COMPRESIÓN: 
+       En lugar de medir toda la pantalla, le damos un ancho fijo/fluido 
+       que envuelva cómodamente al texto rotado (unos 250px - 350px). */
+    width: clamp(200px, 20vw, 350px);
+    height: 100vh;
+    flex-shrink: 0;
+
+    position: relative;
+    /* Quitamos el overflow: hidden para que las letras gigantes respiren si se pasan un milímetro */
+}
+
+/* 🔥 EL TEXTO GIGANTE ROTADO (No se toca, ya es perfecto) */
+.m-next-work__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+
+    font-family: var(--font-display, serif);
+    font-size: clamp(5rem, 13vw, 14rem);
+    line-height: 0.85;
+    margin: 0;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+
+    transition: color var(--dur-normal) ease;
+}
+
+.m-next-work__title {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin: 0;
+    opacity: 0.5;
+}
+
+/* ── ZONA DE IMAGEN (El Anillo) en NextWork/style.css ── */
+.m-next-work__image-area {
+    flex-shrink: 0;
+    width: var(--anillo-width, 100px);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    /* ESTO centra tus 85vh verticalmente */
+    overflow: hidden;
+}
+
+/* Blindaje total con !important */
+.m-next-work__image-area .a-image-reveal,
+.m-next-work__image-area .a-image-reveal__frame,
+.m-next-work__image-area .a-image-reveal__parallax {
+    height: 85vh !important;
+    width: max-content !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.m-next-work__image-area .a-image-reveal__img {
+    height: 100% !important;
+    width: auto !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    display: block !important;
+    margin: 0 !important;
+    transition: transform 0.6s var(--ease-out-expo);
+}
+
+/* Interacción hover */
+.m-next-work:hover .m-next-work__label {
+    color: var(--c-text-muted, #666666);
+}
+
+.m-next-work:hover .m-next-work__image-area .a-image-reveal__img {
+    transform: translateX(-15px);
+}
+
+/* Añade esto al final de NextWork/style.css */
+
+/* ============================================
+   MÓVIL
+   ============================================ */
+@media (max-width: 48em) {
+
+    /* Hacemos match con el tamaño de la foto principal del tren (75vh) */
+    .m-next-work__image-area .a-image-reveal,
+    .m-next-work__image-area .a-image-reveal__frame {
+        height: 75vh !important;
+    }
+}

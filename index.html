@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tu Portafolio</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <style>
+    #boot-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      /* Telón negro absoluto */
+      z-index: 999999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.6s ease;
+    }
+
+    /* Una pequeña línea o texto de carga si quieres, muy minimalista */
+    .boot-line {
+      width: 0px;
+      height: 2px;
+      background: #fff;
+      animation: boot-load 2s infinite cubic-bezier(0.8, 0, 0.2, 1);
+    }
+
+    @keyframes boot-load {
+      0% {
+        width: 0;
+        opacity: 1;
+      }
+
+      50% {
+        width: 100px;
+        opacity: 1;
+      }
+
+      100% {
+        width: 0;
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="boot-loader">
+    <div class="boot-line"></div>
+  </div>
+
+  <div id="app-root"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

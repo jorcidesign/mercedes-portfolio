@@ -1,0 +1,55 @@
+.o-hero-work-detail {
+    width: 100%;
+    height: 100%;
+    /* ocupa el 100vh del slot padre, no el suyo propio */
+    display: flex;
+    align-items: center;
+    color: var(--c-black, #000000);
+    justify-content: center;
+    /* background-color: var(--c-white, #ffffff); */
+    padding: 0 4vw;
+    text-align: center;
+    overflow: hidden;
+}
+
+.o-hero-work-detail__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1200px;
+}
+
+/* 🔥 Bloque extra para apilar los dos ParallaxTitle correctamente */
+.o-hero-work-detail__titles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.o-hero-work-detail__title {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 15rem);
+    /* Texto gigantesco y responsivo */
+    line-height: 0.85;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.o-hero-work-detail__category {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.o-hero-work-detail__description {
+    font-family: var(--font-serif);
+    /* Como en tu diseño */
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.4;
+    max-width: 800px;
+    margin: 0 auto;
+}

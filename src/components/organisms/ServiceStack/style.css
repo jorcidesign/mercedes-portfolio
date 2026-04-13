@@ -1,0 +1,42 @@
+/* ============================================================
+   ORGANISMO — SERVICE STACK (El contenedor de la baraja)
+   ============================================================ */
+
+.o-service-stack {
+    width: 100%;
+    padding: var(--space-10) 0;
+    position: relative;
+    /* ⚠️ REGLA DE ORO: NUNCA pongas overflow: hidden aquí, 
+       o el 'position: sticky' de las tarjetas de adentro dejará de funcionar */
+}
+
+.o-service-stack__wrapper {
+    width: 100%;
+    max-width: var(--max-width, 1440px);
+    margin: 0 auto;
+
+    /* Padding lateral para que las tarjetas respeten los bordes del container global */
+    padding: 0 var(--gutter-mobile, 1.5rem);
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* ============================================
+   BREAKPOINTS — DESKTOP
+   ============================================ */
+@media (min-width: 48em) {
+    .o-service-stack {
+        padding: var(--space-20) 0;
+
+        /* 🔥 PADDING VITAL PARA EL ÚLTIMO SCROLL 🔥
+           Le damos un padding inferior masivo para que puedas scrollear 
+           más allá de la última tarjeta y se vea cómo se quedan todas apiladas. */
+        padding-bottom: 30vh;
+    }
+
+    .o-service-stack__wrapper {
+        padding: 0 var(--gutter-desktop, 2.5rem);
+    }
+}

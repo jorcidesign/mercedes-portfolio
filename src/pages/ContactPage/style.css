@@ -1,0 +1,81 @@
+/* ============================================================
+   PÁGINA — CONTACT
+   ============================================================ */
+.p-contact {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--c-white, #ffffff);
+    color: var(--c-black, #000000);
+}
+
+.p-contact__container {
+    width: 100%;
+    max-width: var(--max-width, 1440px);
+    margin: 0 auto;
+    padding: 0 var(--gutter-mobile, 1.5rem);
+}
+
+/* ── HERO & TÍTULO ── */
+.p-contact__hero {
+    width: 100%;
+    padding-top: 25vh;
+    padding-bottom: 10vh;
+    /* Un poco más de aire antes del formulario */
+}
+
+.p-contact__title .a-parallax-title {
+    font-size: clamp(3.5rem, 12vw, 10rem);
+    text-transform: uppercase;
+    line-height: 0.85;
+    margin: 0;
+    text-align: left;
+    letter-spacing: var(--ls-tight, -0.02em);
+}
+
+/* ── FORMULARIO & TEXTO (LA CAJA ESTRUCTURAL) ── */
+.p-contact__content {
+    width: 100%;
+    padding-bottom: 20vh;
+}
+
+/* 🔥 EL WRAPPER QUE CENTRA TODO EL BLOQUE 🔥 */
+.p-contact__form-wrapper {
+    width: 100%;
+    max-width: 800px;
+    /* Un ancho máximo de lectura súper elegante */
+    margin: 0 auto;
+    /* Magia pura: centra el bloque completo horizontalmente */
+    display: flex;
+    flex-direction: column;
+}
+
+/* El texto superior del formulario */
+.p-contact__text {
+    font-family: var(--font-serif, serif);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    line-height: 1.4;
+    color: var(--c-black, #000000);
+    margin-bottom: var(--space-12);
+    /* No le damos max-width aquí para que llene el wrapper */
+    text-align: left;
+    /* Mantenemos el texto justificado a la izquierda por estética */
+}
+
+/* La caja que sostiene a la molécula (evita que flote) */
+.p-contact__form-box {
+    width: 100%;
+    display: block;
+}
+
+/* ============================================
+   BREAKPOINTS — DESKTOP
+   ============================================ */
+@media (min-width: 48em) {
+    .p-contact__container {
+        padding: 0 var(--gutter-desktop, 2.5rem);
+    }
+
+    .p-contact__hero {
+        padding-bottom: 5vh;
+    }
+}

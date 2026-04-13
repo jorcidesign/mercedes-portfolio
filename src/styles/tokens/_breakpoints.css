@@ -1,0 +1,30 @@
+/* ============================================================
+   TOKENS — BREAKPOINTS
+   Fuente: referencia Awwwards (sistema body:after semántico)
+   ============================================================ */
+
+:root {
+    /* Valores numéricos para uso en JS si lo necesitas */
+    --bp-mobile-landscape-value: 816;
+    /* px */
+    --bp-tablet-value: 768;
+    --bp-tablet-big-value: 970;
+    --bp-desktop-value: 1024;
+    --bp-desktop-md-value: 1280;
+    --bp-desktop-lg-value: 1440;
+}
+
+/*
+  USO en media queries (siempre en em para consistencia):
+
+  mobile-landscape  → @media (max-width: 51em)
+  tablet-portrait   → @media (min-width: 48em)
+  tablet-big        → @media (min-width: 60.625em)
+  desktop           → @media (min-width: 64em)
+  desktop-medium    → @media (min-width: 80em)
+  desktop-large     → @media (min-width: 90em)
+
+  NOTA: CSS puro no permite variables dentro de @media queries.
+  Si usas PostCSS o SCSS, puedes mapear con custom-media.
+  Con Vanilla CSS, usa directamente los valores em.
+*/

@@ -1,0 +1,36 @@
+/* src/components/atoms/ScrollArrow/style.css */
+
+.a-scroll-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* El color blanco solicitado. Usamos currentColor en el SVG para que herede esto */
+    color: #ffffff;
+
+    /* Tamaño base fluido. Puedes ajustarlo o dejar que el contenedor padre lo dicte */
+    width: clamp(20px, 3vw, 32px);
+    height: auto;
+}
+
+.a-scroll-arrow__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+
+    /* 🔥 LA MAGIA DE LA OSCILACIÓN 🔥 */
+    /* 1.5s de duración por ciclo, repetición infinita, invirtiendo dirección */
+    animation: scrollOscillation 1.5s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+/* El Keyframe: Sube un poco y baja un poco respecto a su centro */
+@keyframes scrollOscillation {
+    0% {
+        transform: translateY(-20%);
+    }
+
+    100% {
+        transform: translateY(20%);
+    }
+}

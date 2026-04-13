@@ -1,0 +1,123 @@
+/* ============================================================
+   TOKENS — LAYOUT
+   Geometría, proporciones, viewport, safe areas y z-index.
+   ============================================================ */
+
+:root {
+    /* ── Anchos máximos ──────────────────────────────────────── */
+    --max-width: 1440px;
+    /* tope absoluto del sitio          */
+    --content-width: 1200px;
+    /* contenido interior               */
+
+    /* ── Sidebar / Nav lateral ───────────────────────────────── */
+    --sidebar-width: 72px;
+    /* colapsado                        */
+    --sidebar-expanded: 320px;
+    /* abierto                          */
+    --nav-dropdown-width: 300px;
+
+    /* ── Aspect Ratios ───────────────────────────────────────── 
+     Para que el grid nunca se rompa sin importar qué imagen sube el cliente.
+     Uso: aspect-ratio: var(--ar-portrait);
+  ─────────────────────────────────────────────────────────── */
+    --ar-portrait: 3 / 4;
+    /* editorial clásico                 */
+    --ar-landscape: 16 / 9;
+    /* cine / hero                       */
+    --ar-square: 1 / 1;
+    /* grid mood board                   */
+    --ar-cinematic: 21 / 9;
+    /* ultra-wide / hero dramático       */
+    --ar-tall: 2 / 3;
+    /* foto vertical pronunciada         */
+
+    /* ── Viewport Heights ────────────────────────────────────── 
+     100vh clásico falla en Safari móvil (la barra de URL lo tapa).
+     dvh = Dynamic Viewport Height — estándar moderno.
+     svh = Small Viewport Height — el más pequeño posible (barra visible).
+     lvh = Large Viewport Height — el más grande posible (barra oculta).
+  ─────────────────────────────────────────────────────────── */
+    --vh: 100dvh;
+    /* el que debes usar siempre            */
+    --vh-sm: 100svh;
+    /* cuando la barra está visible (seguro) */
+    --vh-lg: 100lvh;
+    /* cuando la barra está oculta           */
+
+    /* ── Safe Areas (notch, home bar de iPhone) ──────────────── 
+     Evita que contenido quede tapado por la isla dinámica
+     o la barra de gestos en la parte inferior.
+     Uso: padding-bottom: calc(var(--space-8) + var(--safe-bottom));
+  ─────────────────────────────────────────────────────────── */
+    --safe-top: env(safe-area-inset-top);
+    --safe-right: env(safe-area-inset-right);
+    --safe-bottom: env(safe-area-inset-bottom);
+    --safe-left: env(safe-area-inset-left);
+
+    /* ── Z-Index ─────────────────────────────────────────────── */
+    --z-base: 0;
+    --z-content: 1;
+    --z-raised: 10;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-overlay: 300;
+    --z-modal: 400;
+    --z-toast: 500;
+    --z-cursor: 999;
+
+    /* Capas semánticas de la referencia */
+    --z-landing: 2;
+    /* landing sobre latest                  */
+    --z-ui: 4;
+    /* flechas, CTAs sobre imágenes          */
+    --z-header: 11;
+    /* header fijo                           */
+    --z-nav: 10;
+    /* nav mobile abierto                    */
+
+
+    --z-footer: 10;
+    /* Nivel 1: El telón de fondo */
+    --z-main: 20;
+    /* Nivel 2: El contenido que scrollea */
+    --z-intro: 90;
+    /* Nivel 3: La pantalla de carga/intro */
+    --z-navdrawer: 95;
+    --z-header: 100;
+    /* Nivel 4: El navbar maestro */
+}
+
+/* ── Utilities de Aspect Ratio ────────────────────────────── */
+.ar-portrait {
+    aspect-ratio: var(--ar-portrait);
+}
+
+.ar-landscape {
+    aspect-ratio: var(--ar-landscape);
+}
+
+.ar-square {
+    aspect-ratio: var(--ar-square);
+}
+
+.ar-cinematic {
+    aspect-ratio: var(--ar-cinematic);
+}
+
+.ar-tall {
+    aspect-ratio: var(--ar-tall);
+}
+
+/* La imagen dentro siempre llena sin distorsión */
+.ar-portrait img,
+.ar-landscape img,
+.ar-square img,
+.ar-cinematic img,
+.ar-tall img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}

@@ -1,0 +1,90 @@
+/* ============================================
+   IMAGE REVEAL — Átomo con soporte Parallax
+   ============================================ */
+
+/* 1. EL CONTENEDOR EXTERNO */
+.a-image-reveal {
+    display: flex;
+    justify-content: center;
+    /* Centra el marco si sobra espacio en la columna */
+    width: 100%;
+    margin: 0;
+}
+
+/* 2. EL MARCO (La caja que recorta los excesos) */
+.a-image-reveal__frame {
+    position: relative;
+    display: block;
+
+    /* Se abraza milimétricamente al tamaño de la imagen */
+    width: fit-content;
+    max-width: 100%;
+
+    /* CORTA el desborde del Zoom y los márgenes invisibles del Parallax */
+    overflow: hidden;
+    /* background-color: var(--c-bg-subtle, #1a1a1a); */
+}
+
+/* 3. EL MOTOR PARALLAX */
+.a-image-reveal__parallax {
+    display: block;
+    width: 100%;
+    will-change: transform;
+    transition: none;
+}
+
+/* 4. LA IMAGEN (Matemática pura) */
+.a-image-reveal__img {
+    display: block;
+
+    /* ❌ SIN OBJECT-FIT. La imagen dicta su propia forma natural */
+    width: auto;
+    height: auto;
+
+    /* FRENOS DE EMERGENCIA */
+    max-width: 100%;
+    /* No rompas el ancho de la columna */
+    max-height: 85vh;
+    /* No rompas el alto de la pantalla */
+
+    will-change: transform;
+    transition: transform var(--dur-slower) var(--ease-out-expo);
+}
+
+.a-image-reveal--hover {
+    cursor: pointer;
+}
+
+/* ============================================
+   GESTIÓN DE ESCALAS (El "Colchón" del Parallax)
+   ============================================ */
+
+/* La imagen es 20% más grande, pero el "__frame" (overflow:hidden) la recorta.
+   Esto permite que el JS la mueva un 10% arriba/abajo sin mostrar huecos negros. */
+.a-image-reveal[data-parallax="vertical"] .a-image-reveal__img,
+.a-image-reveal[data-parallax="horizontal"] .a-image-reveal__img {
+    transform: scale(1.2);
+}
+
+.a-image-reveal--hover[data-parallax="vertical"]:hover .a-image-reveal__img,
+.a-image-reveal--hover[data-parallax="horizontal"]:hover .a-image-reveal__img {
+    transform: scale(1.25);
+}
+
+.a-image-reveal[data-parallax="none"] .a-image-reveal__img {
+    transform: scale(1);
+}
+
+.a-image-reveal--hover[data-parallax="none"]:hover .a-image-reveal__img {
+    transform: scale(1.05);
+}
+
+/* ============================================
+   MÓVIL
+   ============================================ */
+@media (max-width: 47.99em) {
+    .a-image-reveal__img {
+        max-height: 70vh;
+        /* En celular el freno es más bajo para dejar ver el texto */
+    }
+}

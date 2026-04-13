@@ -1,0 +1,46 @@
+/* ============================================================
+   ÁTOMO — INPUT FIELD (Estilo Minimalista)
+   ============================================================ */
+.a-input-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: var(--space-6);
+}
+
+.a-input-field__label {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--c-black, #000000);
+}
+
+.a-input-field__control {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 1rem;
+    color: var(--c-black, #000000);
+    padding: 0.5rem 0;
+
+    /* 🔥 La magia del estilo editorial: Solo línea inferior */
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    /* Evita bordes curvos nativos de iOS */
+
+    transition: border-color 0.3s ease;
+}
+
+/* El textarea necesita una altura mínima para que se vea bien */
+.a-input-field__control--area {
+    min-height: 120px;
+    resize: vertical;
+    /* Permite al usuario estirarlo solo hacia abajo */
+}
+
+/* Interacción de Focus limpia */
+.a-input-field__control:focus {
+    outline: none;
+    border-bottom-color: var(--c-black, #000000);
+}

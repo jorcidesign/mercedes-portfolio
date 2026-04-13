@@ -1,0 +1,211 @@
+/* ============================================================
+   ORGANISMO — HEADER GLOBAL
+   ============================================================ */
+
+.o-header-global {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    /* 🔥 FIX Z-INDEX: Conectado a tu token 9. 
+       Queda exactamente 1 nivel por encima del NavDrawer (8). */
+    z-index: var(--z-header);
+    /* 🔥 100 */
+
+    /* pointer-events: none deja que los clics pasen al canvas 3D 
+       en los espacios vacíos del header */
+    pointer-events: none;
+
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity var(--dur-slow) var(--ease-out-expo),
+        transform var(--dur-slow) var(--ease-out-expo),
+        color var(--dur-base) var(--ease-in-out-quart);
+}
+
+.o-header-global.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.o-header-global.theme-light {
+    color: var(--c-white);
+}
+
+.o-header-global.theme-dark {
+    color: var(--c-black);
+}
+
+/* ============================================================
+   LAS 4 CAPAS (Arquitectura Rígida Edge-to-Edge)
+   ============================================================ */
+
+/* CAPA 1 — Padding Vertical (El empuje desde el techo) */
+.o-header-global__outer {
+    width: 100%;
+
+    /* 🔥 FIX ESPACIADO: Usamos tu token exacto de 15px para móvil */
+    padding-top: var(--header-burger-top-mobile);
+
+    /* Reactivamos los clics solo donde hay elementos reales */
+    pointer-events: auto;
+}
+
+/* CAPA 2 — Padding Lateral (El enmarcado Edge-to-Edge) */
+.o-header-global__inner {
+    width: 100%;
+
+    /* 🔥 FIX BORDES: ELIMINAMOS EL MAX-WIDTH. 
+       Ahora siempre ocupará el 100% de la pantalla. */
+
+    /* Usamos tu token exacto de 15px para móvil */
+    padding: 0 var(--header-burger-right-mobile);
+}
+
+/* CAPA 3 — Grid de 3 columnas (Móvil) */
+.o-header-global__grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Columnas base */
+.o-header-global__col {
+    display: flex;
+    align-items: center;
+}
+
+.o-header-global__col--left {
+    display: none;
+    /* NavList oculta en móvil */
+}
+
+.o-header-global__col--center {
+    flex: 1;
+    justify-content: flex-start;
+    /* Logo alineado a la izquierda en móvil */
+}
+
+/* El ActionGroup (Derecha) */
+.o-header-global__col--right {
+    /* 🔥 FIX: Le damos de la columna 9 a la 12 para que tenga "zona segura" */
+    grid-column: 9 / 13;
+    align-self: stretch;
+
+    /* 🔥 LA MAGIA: 
+           Aunque su caja abarca 4 columnas hacia la izquierda, 
+           obligamos a que el contenido se clave en la extrema derecha.
+           Así cuando la pantalla se achique, el botón invadirá el espacio 
+           vacío de la izquierda en lugar de romper el padding derecho. */
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* CAPA 4 — Empuja el ActionGroup al top-right dentro de su columna */
+.o-header-global__action-push {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Clavado al techo */
+    align-items: flex-end;
+    /* Alinea los botones a la derecha */
+    height: 100%;
+
+    /* 🔥 Asegúrate de NO tener un width: 100% aquí para que 
+       el justify-content: flex-end del padre haga su trabajo */
+}
+
+/* Ajuste de logo */
+#header-logo-slot {
+    width: 45px;
+    display: block;
+}
+
+/* ============================================================
+   BREAKPOINTS — DESKTOP (A partir de 1024px / 64em)
+   Usamos 64em para coincidir con tu NavDrawer
+   ============================================================ */
+@media (min-width: 64em) {
+
+    /* CAPA 1: Respiro superior de escritorio (28px) */
+    .o-header-global__outer {
+        /* padding-top: var(--header-burger-top-desktop); */
+    }
+
+    /* CAPA 2: Enmarcado lateral de escritorio (28px) 
+       Al no tener max-width, la lista y el burger se pegan a los bordes 
+       del monitor por más gigante que sea. */
+    .o-header-global__inner {
+        padding: 0 var(--header-burger-right-desktop);
+    }
+
+    /* CAPA 3: La Grilla Maestra de 12 Columnas */
+    .o-header-global__grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: var(--gap-lg);
+        align-items: stretch;
+    }
+
+    /* NavList (Izquierda: Columnas 1 a 4) */
+    .o-header-global__col--left {
+        display: flex;
+        grid-column: 1 / 5;
+        align-items: flex-start;
+    }
+
+    /* Logo (Centro: Columnas 6 y 7) */
+    .o-header-global__col--center {
+        grid-column: 6 / 8;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    /* ActionGroup / Burger (Derecha: Columnas 9 a 12) */
+    .o-header-global__col--right {
+        grid-column: 9 / 13;
+        align-self: stretch;
+    }
+
+    #header-logo-slot {
+        width: 60px;
+        /* Logo más grande en desktop */
+    }
+}
+
+/* ============================================================
+   THEME CONTEXTUAL (LA MAGIA DEL CONTRASTE)
+   Sobreescribe el ThemeStore de los átomos solo cuando el Drawer sale.
+   ============================================================ */
+
+/* 1. MÓVIL Y TABLET (Hasta 1024px)
+   Como el NavDrawer ocupa el 100vw, TODOS los elementos del Header 
+   (Logo y Botones) deben volverse blancos para contrastar con el fondo negro. */
+@media (max-width: 64em) {
+    .o-header-global.is-drawer-open .theme-dark {
+        color: var(--c-white);
+    }
+
+    /* Invertimos el comportamiento del hover del botón */
+    .o-header-global.is-drawer-open .a-nav-button--outline.theme-dark:hover {
+        background-color: var(--c-white);
+        color: var(--c-black);
+    }
+}
+
+/* 2. DESKTOP (Más de 1024px)
+   El NavDrawer solo mide 35vw (Derecha). 
+   Por ende, el Logo y la Lista Izquierda deben respetar el ThemeStore de la página.
+   SOLO forzamos al blanco los botones de la columna derecha. */
+@media (min-width: 64.01em) {
+    .o-header-global.is-drawer-open .o-header-global__col--right .theme-dark {
+        color: var(--c-white);
+    }
+
+    /* Invertimos el comportamiento del hover del botón solo en la derecha */
+    .o-header-global.is-drawer-open .o-header-global__col--right .a-nav-button--outline.theme-dark:hover {
+        background-color: var(--c-white);
+        color: var(--c-black);
+    }
+}

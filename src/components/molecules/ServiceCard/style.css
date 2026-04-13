@@ -1,0 +1,237 @@
+/* ============================================================
+   MOLÉCULA — SERVICE CARD
+   Filosofía: Ma (間) — espacio como elemento activo
+   Mobile-first. Tablet = mobile. Desktop = layout completo.
+   ============================================================ */
+
+/* ── BASE ── */
+.m-service-card {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: var(--c-white, #ffffff);
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--space-8, 2rem);
+    border-top: 1px solid var(--c-black, #000000);
+}
+
+.m-service-card:first-child {
+    border-top: none;
+}
+
+
+/* ── HEADER ── */
+.m-service-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 0 var(--space-4, 1rem) 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin-bottom: var(--space-8, 2rem);
+}
+
+.m-service-card__title {
+    font-family: var(--font-display, serif);
+    font-size: clamp(2.5rem, 10vw, 6rem);
+    line-height: 0.88;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-align: left;
+    max-width: 100%;
+}
+
+.m-service-card__index {
+    font-family: var(--font-sans, sans-serif);
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    line-height: 0.88;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.25);
+    margin: 0;
+    display: none;
+    /* Solo visible en desktop */
+    flex-shrink: 0;
+}
+
+
+/* ── BODY: MOBILE + TABLET (stack vertical, ancho total) ── */
+.m-service-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8, 2rem);
+    padding: 0 0 15vh 0;
+}
+
+.m-service-card__left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6, 1.5rem);
+}
+
+.m-service-card__desc {
+    font-family: var(--font-sans, sans-serif);
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    line-height: 1.5;
+    color: var(--c-black, #000000);
+    margin: 0;
+    max-width: 62ch;
+}
+
+.m-service-card__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.m-service-card__features li {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--c-black, #000000);
+    position: relative;
+    padding-left: 1rem;
+}
+
+.m-service-card__features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 3px;
+    height: 3px;
+    background-color: var(--c-black, #000000);
+    border-radius: 50%;
+}
+
+
+/* ── BLOQUE DE ACCIÓN ── */
+.m-service-card__action-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4, 1rem);
+    padding-top: var(--space-6, 1.5rem);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+.m-service-card__price {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+
+/* ── IMAGEN ── */
+.m-service-card__right {
+    width: 100%;
+}
+
+.m-service-card__img-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    align-self: start;
+}
+
+.m-service-card__img-wrapper .a-image-reveal,
+.m-service-card__img-wrapper .a-image-reveal__frame,
+.m-service-card__img-wrapper .a-image-reveal__img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    margin: 0 !important;
+}
+
+
+/* ============================================
+   TABLET (768px – 1023px)
+   Igual que mobile. Sin grid. Sin columnas.
+   Solo más padding-bottom y tipografía levemente mayor.
+   ============================================ */
+@media (min-width: 48em) and (max-width: 63.9375em) {
+    .m-service-card {
+        padding-top: var(--space-10, 2.5rem);
+    }
+
+    .m-service-card__body {
+        padding-bottom: 18vh;
+        gap: var(--space-10, 2.5rem);
+    }
+
+    .m-service-card__desc {
+        font-size: 1.2rem;
+    }
+}
+
+
+/* ============================================
+   DESKTOP (1024px+)
+   Aquí activamos el layout de dos columnas.
+   ============================================ */
+@media (min-width: 64em) {
+    .m-service-card {
+        min-height: 100vh;
+        padding-top: var(--space-12, 3rem);
+    }
+
+    .m-service-card__index {
+        display: block;
+    }
+
+    .m-service-card__body {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 8vw;
+        padding-bottom: 25vh;
+        align-items: start;
+    }
+
+    .m-service-card__left {
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .m-service-card__features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 3rem;
+        row-gap: 0.6rem;
+    }
+
+    .m-service-card__desc {
+        font-size: 1.5rem;
+        line-height: 1.4;
+    }
+
+    .m-service-card__img-wrapper {
+        aspect-ratio: 3 / 4;
+        /* Más vertical en desktop, más elegante */
+        position: sticky;
+        top: var(--space-12, 3rem);
+    }
+}
+
+
+/* ============================================
+   DESKTOP XL (1440px+)
+   Refinamiento final. Nada más.
+   ============================================ */
+@media (min-width: 90em) {
+    .m-service-card__body {
+        grid-template-columns: 1.6fr 1fr;
+        gap: 10vw;
+    }
+
+    .m-service-card__desc {
+        font-size: 1.75rem;
+    }
+}

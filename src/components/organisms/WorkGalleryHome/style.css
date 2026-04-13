@@ -1,0 +1,81 @@
+/* ============================================
+   WORK GALLERY HOME (Organismo)
+   ============================================ */
+
+.o-work-gallery-home {
+    width: 100%;
+    /* Tu variable maestra de layout absoluto */
+    max-width: var(--max-width);
+    margin: 0 auto;
+
+    /* 🔥 LA MAGIA SEMÁNTICA: Usamos los tokens de layout en lugar de números quemados */
+    padding: var(--section-y-desktop) var(--gutter-desktop);
+
+    /* Aseguramos el contraste ya que venimos del HeroCanvas que es negro */
+    background-color: var(--c-white);
+    color: var(--c-black);
+}
+
+.o-work-gallery-home__header {
+    text-align: center;
+    /* Usa el token de sección para separar el título del primer proyecto */
+    margin-bottom: var(--section-y-desktop);
+}
+
+.o-work-gallery-home__title {
+    /* Tu escala fluida tipográfica */
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: var(--fw-light);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+
+    display: inline-block;
+    border-bottom: 1px solid var(--c-text-muted);
+    padding-bottom: var(--space-2);
+}
+
+/* El contenedor que apila verticalmente los WorkCards */
+.o-work-gallery-home__grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    /* No necesitamos gap porque cada WorkCard ya tiene 
+       margin-bottom: var(--section-y-desktop) desde su propio CSS */
+}
+
+/* --- Estados de API --- */
+.o-work-gallery-home__loading,
+.o-work-gallery-home__empty,
+.o-work-gallery-home__error {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    text-align: center;
+    color: var(--c-text-muted);
+    padding: var(--space-20) 0;
+}
+
+/* ============================================
+   MEDIA QUERIES 
+   (Sincronizadas con tus tokens de Breakpoints)
+   ============================================ */
+
+/* Mobile */
+@media (max-width: 51em) {
+    .o-work-gallery-home {
+        /* Pasa a usar los gutters y espacios verticales de celular */
+        padding: var(--section-y-mobile) var(--gutter-mobile);
+    }
+
+    .o-work-gallery-home__header {
+        margin-bottom: var(--section-y-mobile);
+    }
+}
+
+/* Tablet */
+@media (min-width: 48em) and (max-width: 64em) {
+    .o-work-gallery-home {
+        padding: var(--section-y-tablet) var(--gutter-tablet);
+    }
+}

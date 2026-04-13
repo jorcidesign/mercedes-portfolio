@@ -1,0 +1,38 @@
+/* ============================================================
+   ÁTOMO — LOGO FULL
+   ============================================================ */
+
+/* 1. CAJA CONTENEDORA (Wrapper flexible) */
+.a-logo-full {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* El logo llena el contenedor en el que se ponga al 100% */
+    width: 100%;
+    height: 100%;
+
+    /* Token de animación para cuando el tema cambie de dark a light */
+    transition: color var(--dur-base) var(--ease-out-expo);
+}
+
+/* 2. CAJA DE CONTENIDO (El SVG en sí) */
+.a-logo-full__svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    /* fill="currentColor" en el SVG toma el color que definamos aquí arriba */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MODIFICADORES DE TEMA (Conectados a Tokens)
+───────────────────────────────────────────────────────────── */
+
+.a-logo-full--light {
+    color: var(--c-white);
+}
+
+.a-logo-full--dark {
+    color: var(--c-black);
+}

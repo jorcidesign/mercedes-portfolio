@@ -1,0 +1,158 @@
+/* ============================================================
+   ORGANISMO — FOOTER (Estilo Evagher / Agencia)
+   ============================================================ */
+
+.o-footer {
+    width: 100%;
+    /* Fondo negro profundo para el footer premium */
+    background-color: #0d0d0d;
+    color: #ffffff;
+    /* Un buen respiro superior e inferior */
+    padding: var(--space-16) 0 var(--space-8) 0;
+    position: relative;
+    z-index: 10;
+}
+
+.o-footer__wrapper {
+    width: 100%;
+    max-width: var(--max-width, 1440px);
+    margin: 0 auto;
+    padding: 0 var(--gutter-mobile, 1.5rem);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── TIPOGRAFÍAS BASE DEL FOOTER ── */
+.o-footer__label {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #888888;
+    /* El gris de tu referencia */
+    margin-bottom: var(--space-4);
+    text-transform: uppercase;
+}
+
+.o-footer__text,
+.o-footer__link {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0;
+}
+
+.o-footer__link:hover {
+    opacity: 0.7;
+}
+
+/* ── FIX PARA LOS NAVLINKS EN EL FOOTER OSCURO ── */
+/* Obligamos a los NavLink a ser blancos aquí adentro para que el ThemeStore 
+   no los vuelva negros si la página actual es "light" */
+.o-footer .a-nav-link .a-nav-link__text {
+    color: #ffffff !important;
+}
+
+.o-footer .a-nav-link:hover .a-nav-link__text {
+    opacity: 0.7;
+}
+
+/* ============================================
+   MOBILE FIRST (1 Columna)
+   ============================================ */
+.o-footer__top {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    margin-bottom: var(--space-10);
+}
+
+.o-footer__vision-text {
+    font-family: var(--font-sans, sans-serif);
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.o-footer__nav,
+.o-footer__social-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.o-footer__divider {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: var(--space-10);
+}
+
+.o-footer__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+    margin-bottom: var(--space-16);
+}
+
+.o-footer__copyright {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.75rem;
+    color: #666666;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.o-footer__copyright p {
+    margin: 0;
+}
+
+/* ============================================
+   BREAKPOINTS — DESKTOP (Grilla de 3 columnas)
+   ============================================ */
+@media (min-width: 48em) {
+    .o-footer__wrapper {
+        padding: 0 var(--gutter-desktop, 2.5rem);
+    }
+
+    .o-footer {
+        padding: var(--space-24) 0 var(--space-12) 0;
+    }
+
+    /* Top Grid: 3 columnas */
+    .o-footer__top {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: var(--space-16);
+    }
+
+    .o-footer__col-vision {
+        grid-column: 1 / 2;
+        padding-right: 2rem;
+    }
+
+    .o-footer__col-empty {
+        grid-column: 2 / 3;
+    }
+
+    .o-footer__col-menu {
+        grid-column: 3 / 4;
+    }
+
+    .o-footer__divider {
+        margin-bottom: var(--space-16);
+    }
+
+    /* Bottom Grid: 3 columnas */
+    .o-footer__bottom {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-bottom: var(--space-20);
+    }
+}

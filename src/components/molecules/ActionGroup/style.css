@@ -1,0 +1,37 @@
+/* ============================================
+   ACTION GROUP (Molécula)
+   ============================================ */
+
+.m-action-group {
+    display: flex;
+    align-items: center;
+    /* Empuja los botones a la derecha de la celda que le dé el Header */
+    justify-content: flex-end;
+
+    /* 🔥 USAMOS TU NUEVO SISTEMA DE DISEÑO */
+    gap: var(--gap-xs);
+
+    /* Llena por completo la celda azul que el HeaderGlobal le asignará */
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+/* Las "cajas fuertes" que envuelven los botones */
+.m-action-group__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* Toma la altura total disponible */
+    flex-shrink: 0;
+}
+
+/* Ocultamiento semántico para móvil */
+@media (max-width: 51em) {
+
+    /* 51em = 816px (Alineado con tus breakpoints) */
+    .m-action-group__wrapper--hide-mobile {
+        display: none;
+    }
+}

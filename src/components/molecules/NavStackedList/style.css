@@ -1,0 +1,31 @@
+/* ============================================================
+   MOLÉCULA — NAV STACKED LIST
+   ============================================================ */
+
+/* 1. CAJA CONTENEDORA */
+.m-nav-stacked {
+    display: block;
+    width: max-content;
+    /* Dicta que la columna mida lo que la palabra más larga ("SERVICES") */
+}
+
+/* 2. CAJA WRAPPER */
+.m-nav-stacked__list {
+    display: flex;
+    flex-direction: column;
+
+    /* 🔥 FIX 1: MATAMOS EL GAP.
+       Ahora las cajas están pegadas exactamente una sobre la otra */
+    gap: 0;
+
+    width: 100%;
+}
+
+/* 3. CAJA INNER (Slot) */
+.m-nav-stacked__item {
+    display: block;
+
+    /* 🔥 FIX 2: CAJAS UNIFORMES.
+       Obligamos al <li> a ocupar el 100% del ancho del padre */
+    width: 100%;
+}

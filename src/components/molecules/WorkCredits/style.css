@@ -1,0 +1,73 @@
+/* ============================================
+   WORK CREDITS (Molécula) - Estilo Editorial
+   ============================================ */
+
+.m-work-credits {
+    /* Ocupa el alto completo y centra su contenido en el tren */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: max-content;
+    padding: 0 10vw;
+}
+
+.m-work-credits__list {
+    /* 🔥 LA CLAVE: Fila horizontal SIEMPRE */
+    display: flex;
+    flex-direction: row;
+    gap: 6vw;
+    align-items: flex-start;
+}
+
+.m-work-credits__item {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.m-work-credits__role {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--c-black, #000000);
+    margin: 0;
+}
+
+.m-work-credits__name {
+    font-family: var(--font-serif, serif);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 400;
+    color: var(--c-black, #000000);
+    text-decoration: none;
+    white-space: nowrap;
+    /* 🔥 Evita que el nombre se parta */
+    transition: opacity var(--dur-fast, 0.3s) ease;
+}
+
+.m-work-credits__name:hover {
+    opacity: 0.5;
+}
+
+/* ============================================
+   MEDIA QUERIES (Móvil)
+   ============================================ */
+@media (max-width: 48em) {
+    .m-work-credits {
+        padding: 0 15vw;
+    }
+
+    .m-work-credits__list {
+        /* 🔥 FIX: Lo forzamos a seguir en fila horizontal */
+        flex-direction: row;
+        gap: 12vw;
+        /* Un poco más de aire relativo en móviles para que se sienta premium */
+    }
+
+    .m-work-credits__name {
+        font-size: 1.8rem;
+        /* Ajuste para que encaje hermoso en móvil sin perder impacto */
+    }
+}

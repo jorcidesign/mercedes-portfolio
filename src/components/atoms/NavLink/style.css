@@ -1,0 +1,125 @@
+/* ============================================================
+   ÁTOMO — NAV LINK
+   ============================================================ */
+
+.a-nav-link {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    cursor: pointer;
+    text-decoration: none;
+
+    padding: var(--space-1) 0;
+
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    line-height: var(--lh-none);
+}
+
+/* El span interno que moveremos (evita el bug de temblor) */
+.a-nav-link__text {
+    display: block;
+    transition: transform var(--dur-base) var(--ease-out-expo),
+        opacity var(--dur-base) var(--ease-out-expo);
+    will-change: transform, opacity;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   VARIANTE 1: STACKED (Línea lateral)
+───────────────────────────────────────────────────────────── */
+.a-nav-link--stacked {
+    padding: var(--space-1) 20px var(--space-1) 0;
+}
+
+/* La línea */
+.a-nav-link--stacked::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: width var(--dur-base) var(--ease-out-expo);
+    pointer-events: none;
+}
+
+/* HOVER */
+.a-nav-link--stacked:hover::before {
+    width: 12px;
+}
+
+.a-nav-link--stacked:hover .a-nav-link__text {
+    transform: translateX(20px);
+    opacity: var(--opacity-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   VARIANTE 2: BASIC
+───────────────────────────────────────────────────────────── */
+.a-nav-link--basic {
+    /* 🔥 FIX: sin padding lateral para no romper el footer en mobile */
+    padding: var(--space-1) 0;
+}
+
+.a-nav-link--basic:hover .a-nav-link__text {
+    opacity: var(--opacity-muted);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TEMAS GLOBALES
+   light = sobre fondo claro  → texto negro
+   dark  = sobre fondo oscuro → texto blanco
+───────────────────────────────────────────────────────────── */
+.theme-light {
+    color: var(--c-black);
+}
+
+.theme-dark {
+    color: var(--c-white);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   OVERRIDE: dentro del NavDrawer siempre blanco
+   El drawer es siempre negro — no depende del ThemeStore
+───────────────────────────────────────────────────────────── */
+.o-nav-drawer .a-nav-link {
+    color: var(--c-white);
+}
+
+/* ============================================================
+   ESTADO ACTIVO (PÁGINA ACTUAL)
+   ============================================================ */
+
+/* 1. Bloqueo total de clics y hover para cualquier enlace activo */
+.a-nav-link.is-active {
+    pointer-events: none;
+    /* Literalmente lo vuelve un fantasma para el mouse */
+    cursor: default;
+}
+
+/* 2. Visuales para la variante STACKED activa */
+.a-nav-link--stacked.is-active::before {
+    width: 12px;
+    /* La línea se queda estirada */
+}
+
+.a-nav-link--stacked.is-active .a-nav-link__text {
+    transform: translateX(20px);
+    /* El texto se queda movido a la derecha */
+    opacity: var(--opacity-hover, 0.5);
+    /* Se queda con la opacidad del hover */
+}
+
+/* 3. Visuales para la variante BASIC activa (Footer / Menús simples) */
+.a-nav-link--basic.is-active .a-nav-link__text {
+    opacity: var(--opacity-muted, 0.5);
+    /* Se queda atenuado como si tuviera hover perenne */
+}

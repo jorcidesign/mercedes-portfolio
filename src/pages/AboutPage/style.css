@@ -1,0 +1,197 @@
+/* ============================================================
+   PÁGINA — ABOUT
+   ============================================================ */
+
+.p-about {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--c-white, #ffffff);
+    color: var(--c-black, #000000);
+    overflow-x: hidden;
+}
+
+/* ── EL HERO (Los títulos apilados) ── */
+.p-about__hero {
+    width: 100%;
+    padding-top: 20vh;
+    /* Un pequeño respiro abajo, pero la foto lo va a tapar parcialmente */
+    padding-bottom: 5vh;
+    position: relative;
+    z-index: 1;
+}
+
+.p-about__hero-container {
+    width: 100%;
+    max-width: var(--max-width, 1440px);
+    margin: 0 auto;
+    padding: 0 var(--gutter-desktop, 2.5rem);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Base común para los títulos */
+.p-about__title .a-parallax-title {
+    /* Tamaño grotesco como en la referencia */
+    font-size: clamp(4rem, 13vw, 15rem);
+    text-transform: uppercase;
+    line-height: 0.8;
+    /* Súper aplastados */
+    margin: 0;
+    width: 100%;
+    display: block;
+}
+
+/* Direcciones opuestas */
+.p-about__title--left .a-parallax-title {
+    text-align: left;
+    letter-spacing: -0.02em;
+}
+
+.p-about__title--right .a-parallax-title {
+    text-align: right;
+    /* Empujamos los de la derecha un poco para que no toquen el borde */
+    padding-right: 2vw;
+}
+
+/* ── LA GRILLA (El contenido inferior) ── */
+.p-about__content {
+    width: 100%;
+    max-width: var(--max-width, 1440px);
+    margin: 0 auto;
+    padding: 0 var(--gutter-desktop, 2.5rem);
+    padding-bottom: 20vh;
+
+    position: relative;
+    z-index: 5;
+    /* Por encima de las letras gigantes */
+
+    /* 🔥 LA MAGIA: Subimos la grilla para que pise las letras */
+    margin-top: -10vh;
+}
+
+.p-about__grid {
+    display: grid;
+    /* Grid asimétrico: 4 fracciones para foto, 5 para texto, 1 hueco en medio */
+    grid-template-columns: 4fr 1fr 5fr;
+    align-items: flex-start;
+}
+
+/* ── COLUMNA IZQUIERDA: LA FOTO ── */
+.p-about__col-img {
+    grid-column: 1 / 2;
+    position: relative;
+}
+
+/* El cuadro de color beige que va por detrás de la foto */
+.p-about__img-bg {
+    position: absolute;
+    top: 15%;
+    left: -15%;
+    width: 120%;
+    height: 100%;
+    background-color: #d8c9c3;
+    /* Tono arena/nude de la referencia */
+    z-index: -1;
+}
+
+.p-about__img-wrapper {
+    width: 100%;
+    /* Obligamos a la foto a tener una altura editorial */
+    height: 70vh;
+}
+
+/* Aseguramos que el ImageReveal llene nuestro wrapper */
+.p-about__img-wrapper .a-image-reveal,
+.p-about__img-wrapper .a-image-reveal__frame {
+    height: 100%;
+    width: 100%;
+}
+
+.p-about__img-wrapper .a-image-reveal__img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* ── COLUMNA DERECHA: LOS TEXTOS ── */
+.p-about__col-text {
+    grid-column: 3 / 4;
+    padding-top: 15vh;
+    /* Bajamos el texto para que la foto quede más arriba visualmente */
+}
+
+.p-about__subtitle {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    color: var(--c-black, #000);
+}
+
+.p-about__copy p {
+    font-family: var(--font-serif, serif);
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    color: var(--c-black, #000);
+}
+
+/* Jugamos con la tipografía dentro del texto (Simulando la caligrafía) */
+.p-about__copy-highlight {
+    font-family: var(--font-serif, serif);
+    font-style: italic;
+    font-weight: 300;
+    /* Un ligero ajuste de tamaño para que destaque */
+    font-size: 1.1em;
+}
+
+.p-about__copy-strike {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+/* ============================================
+   MÓVIL
+   ============================================ */
+@media (max-width: 48em) {
+    .p-about__hero {
+        padding-top: 15vh;
+    }
+
+    .p-about__hero-container {
+        padding: 0 var(--gutter-mobile, 1.5rem);
+    }
+
+    .p-about__content {
+        padding: 0 var(--gutter-mobile, 1.5rem);
+        padding-bottom: 10vh;
+        /* Quitamos el solapamiento agresivo en móvil para que respire */
+        margin-top: 5vh;
+    }
+
+    .p-about__grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .p-about__col-img {
+        grid-column: 1 / -1;
+    }
+
+    .p-about__img-bg {
+        top: 5%;
+        left: -5%;
+        width: 110%;
+    }
+
+    .p-about__img-wrapper {
+        height: 60vh;
+    }
+
+    .p-about__col-text {
+        grid-column: 1 / -1;
+        padding-top: 2rem;
+    }
+}

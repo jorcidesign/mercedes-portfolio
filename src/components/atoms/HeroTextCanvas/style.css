@@ -1,0 +1,32 @@
+/* ============================================================
+   ÁTOMO — HERO TEXT CANVAS
+   Animación 2D del texto principal (Path drawing)
+   ============================================================ */
+
+/* 1. CAJA CONTENEDORA (Geometría y Posición) */
+.a-hero-text-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    /* Sizing explícito: Cubre toda la pantalla en todo momento */
+    width: 100vw;
+    height: var(--vh, 100vh);
+    /* Usa tu token de 100dvh para móviles */
+
+    /* Tokens de capa y blending */
+    z-index: var(--z-landing);
+    /* En tu layout definiste --z-landing: 2; ideal para esto */
+    mix-blend-mode: difference;
+
+    /* VITAL: Deja pasar los clics al canvas 3D o a los enlaces de abajo */
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* 2. CAJA DE CONTENIDO (El Lienzo 2D) */
+.a-hero-text-canvas__element {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

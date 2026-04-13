@@ -1,0 +1,79 @@
+/* ============================================
+   LOGO CURTAIN (Molécula - Preloader)
+   ============================================ */
+
+/* EL CONTENEDOR PRINCIPAL */
+.m-logo-curtain {
+    position: fixed;
+    inset: 0;
+
+    /* Usamos el token más alto para asegurar que cubra el Header y NavDrawer */
+    z-index: 9999;
+
+    /* Token de color: Fondo Blanco */
+    background-color: var(--c-white);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* EL LOGO */
+.m-logo-curtain__logo {
+    width: 60%;
+    max-width: 500px;
+
+    /* Token de color: SVG a negro */
+    color: var(--c-black);
+
+    /* Fase 0 */
+    opacity: 0;
+    transform: translateY(20px);
+
+    /* Mantenemos tus duraciones exactas porque están coreografiadas con el JS */
+    transition: opacity 1.2s ease, transform 1.2s ease;
+
+    /* Token Z-index: Base de contenido (o 1) */
+    z-index: var(--z-content, 1);
+}
+
+/* Fase 1: Aparece el logo */
+.m-logo-curtain__logo.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* LA LÍNEA / PUERTA NEGRA */
+.m-logo-curtain__door {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Token de color maestro: #050505 (El mismo negro que el resto de tu web) */
+    background-color: var(--c-bg);
+
+    /* Token Z-index: Por encima del logo */
+    z-index: var(--z-landing, 2);
+
+    transform-origin: center center;
+    will-change: transform;
+
+    /* Fase 0: Escala oculta */
+    transform: scaleX(0.002) scaleY(0);
+}
+
+/* Fase 2: El corte (Crece hacia arriba y abajo) */
+.m-logo-curtain__door.is-cutting {
+    transform: scaleX(0.002) scaleY(1);
+
+    /* Se mantienen tus curvas Bezier cinematográficas exactas */
+    transition: transform 0.6s cubic-bezier(0.8, 0, 0.2, 1);
+}
+
+/* Fase 3: La expansión (Devora la pantalla) */
+.m-logo-curtain__door.is-expanding {
+    transform: scaleX(1) scaleY(1);
+    transition: transform 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+}

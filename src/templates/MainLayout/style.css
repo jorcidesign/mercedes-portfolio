@@ -1,0 +1,29 @@
+/* ============================================================
+   LAYOUT PRINCIPAL
+   ============================================================ */
+
+.l-smooth-wrapper {
+    position: relative;
+    z-index: var(--z-main, 20);
+    width: 100%;
+    background-color: var(--c-white, #ffffff);
+    will-change: transform;
+
+    /* Flex para asegurar que si la página es corta, el footer se quede al fondo */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#layout-page-slot {
+    flex-grow: 1;
+    /* Obliga a la página a empujar al footer hasta abajo */
+    display: flex;
+    flex-direction: column;
+}
+
+#layout-footer-slot {
+    width: 100%;
+    /* No le ponemos position fixed, no le ponemos z-index locos. 
+       Solo existe al final del scroll. */
+}

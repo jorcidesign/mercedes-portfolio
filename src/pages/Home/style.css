@@ -1,0 +1,38 @@
+.p-home {
+    background-color: var(--c-white);
+    color: var(--c-black);
+    position: relative;
+    /* Quitamos el padding feo que teníamos antes de prueba */
+}
+
+.p-home__content {
+    /* Ocupa al menos toda la primera pantalla detrás del Intro */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    /* Espacio arriba para que el header fijo no tape el título */
+    padding-top: 120px;
+}
+
+/* Estilos de prueba usando tu sistema editorial */
+.p-home__content h2 {
+    font-family: var(--font-display);
+    /* Usamos Cormorant Garamond si lo pusiste en el root */
+    font-size: var(--text-5xl);
+    font-weight: var(--fw-light);
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: var(--ls-tight);
+    margin-bottom: var(--space-4);
+}
+
+.p-home__content p {
+    font-family: var(--font-primary);
+    font-size: var(--text-base);
+    opacity: var(--opacity-muted);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+}
