@@ -215,10 +215,9 @@ export class HeroTextCanvas extends Component {
             const scale = Math.min(this.rectWidth / this.originalWidth, this.rectHeight / this.originalHeight);
             scaleX = scale;
             scaleY = scale;
-            // Centrado horizontal, alineado al TOPE con un respiro mínimo
-            // Así el MERCEDES queda arriba y libera el espacio inferior para flecha/firma/footer
+            // Centrado horizontal y vertical
             offsetX = (this.rectWidth - (this.originalWidth * scaleX)) / 2;
-            offsetY = this.rectHeight * 0.04; // 4% desde el tope
+            offsetY = (this.rectHeight - (this.originalHeight * scaleY)) / 2;
         } else {
             // Stretch mode — llena todo el espacio en desktop
             scaleX = this.rectWidth / this.originalWidth;
