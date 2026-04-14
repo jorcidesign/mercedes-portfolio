@@ -203,17 +203,22 @@ export class HeroTextCanvas extends Component {
         let scaleX = 1, scaleY = 1, offsetX = 0, offsetY = 0;
 
         // ─── LÓGICA DE ESCALA ROBUSTA PARA MÓVILES Y PORTRAIT ───
-        if (window.innerWidth <= 850 || window.innerHeight > window.innerWidth) {
-            // Contained scaling (mantener proporciones y evitar estirar las letras)
+        // En iPhones reales, innerWidth puede ser unreliable en la primera carga.
+        // Usamos screen.width como fallback y también detectamos portrait.
+        const effectiveWidth = Math.min(window.innerWidth, window.screen?.width ?? window.innerWidth);
+        const isPortrait = window.innerHeight > window.innerWidth;
+        const isMobileDevice = effectiveWidth <= 850 || isPortrait;
+
+        if (isMobileDevice) {
+            // Contained scaling: mantiene proporciones sin estirar las letras
             const scale = Math.min(this.rectWidth / this.originalWidth, this.rectHeight / this.originalHeight);
-            // Reducimos un poco más en móviles por el centrado puro
-            const mobileScale = scale * 0.95;
-            scaleX = mobileScale;
-            scaleY = mobileScale;
+            scaleX = scale;
+            scaleY = scale;
+            // Centrado perfecto dentro del canvas
             offsetX = (this.rectWidth - (this.originalWidth * scaleX)) / 2;
             offsetY = (this.rectHeight - (this.originalHeight * scaleY)) / 2;
         } else {
-            // Stretch mode 
+            // Stretch mode — llena todo el espacio en desktop
             scaleX = this.rectWidth / this.originalWidth;
             scaleY = this.rectHeight / this.originalHeight;
         }

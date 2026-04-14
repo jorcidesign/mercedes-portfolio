@@ -120,34 +120,44 @@
    ============================================================ */
 
 @media (max-width: 768px) {
+
+    /* ── CANVAS DE TEXTO (MERCEDES) ──
+       Sin márgenes laterales, choca con el viewport.
+       Centrado verticalmente en la parte superior de la pantalla. */
     .o-hero-intro__text-mount {
         inset: 0;
+        margin: 0;
+        padding: 0;
         transform: none;
-        margin: 0 0.5rem;
     }
 
+    /* ── FIRMA ASTORIMA ──
+       Zona media de la pantalla, sin interferir abajo */
     .o-hero-intro__signature-mount {
         right: auto;
-        top: auto;
+        top: 52dvh;
+        bottom: auto;
         left: 50%;
-        bottom: 14vh;
-        width: 75vw;
+        width: 70vw;
         transform: translateX(-50%) rotate(-8deg);
         transform-origin: center center;
     }
 
+    /* ── FLECHA DE SCROLL ──
+       Por encima del texto footer pero debajo de la firma */
     .o-hero-intro__arrow-mount {
         left: 50%;
-        bottom: 28vh;
-        /* antes 33vh — baja para dar aire al canvas */
+        bottom: 22dvh;
         transform: translateX(-50%);
     }
 
+    /* ── TEXTO FOOTER (makeup artist / and hairstyle) ──
+       Anclado al fondo con suficiente margen para no quedar tapado por la barra de iOS */
     .o-hero-intro__footer-text {
         right: auto;
         top: auto;
         left: 50%;
-        bottom: 14dvh;
+        bottom: 6dvh;
         transform: translateX(-50%);
         text-align: center;
         width: auto;
