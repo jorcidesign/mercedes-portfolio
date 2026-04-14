@@ -31,8 +31,6 @@ export class ScrollOrchestrator {
     private trackMoveDistance: number = 0;
 
     // Estado
-    private rafId: number = 0;
-    private isRunning: boolean = false;
     private hasTriggeredEnd: boolean = false;
 
     private resizeObserver: ResizeObserver | null = null;
@@ -56,13 +54,15 @@ export class ScrollOrchestrator {
         await this.waitForImages();
         this.calculateDimensions();
         this.bindResize();
-        this.bindEvents(); // 🔥 Conectamos los sensores táctiles
-        this.start();
+        this.bindEvents();
+
+        // 🔥 Nos suscribimos al frame exacto del ScrollManager — sin RAF propio
+        ScrollManager.getInstance().onUpdate(this.syncWithScroll);
     }
 
     public destroy(): void {
-        this.stop();
-        this.unbindEvents(); // 🔥 Desconectamos para no dejar basura en memoria
+        ScrollManager.getInstance().offUpdate(this.syncWithScroll); // Desuscribir
+        this.unbindEvents();
         this.resizeObserver?.disconnect();
         this.resizeObserver = null;
     }
@@ -96,7 +96,6 @@ export class ScrollOrchestrator {
     };
 
     private onTouchMove = (e: TouchEvent): void => {
-        if (!this.isRunning) return;
 
         const touchX = e.touches[0].clientX;
         const touchY = e.touches[0].clientY;
@@ -201,26 +200,11 @@ export class ScrollOrchestrator {
         this.resizeObserver.observe(this.els.root);
     }
 
-    private start(): void {
-        if (this.isRunning) return;
-        this.isRunning = true;
-        const tick = () => {
-            this.syncWithScroll();
-            this.rafId = requestAnimationFrame(tick);
-        };
-        this.rafId = requestAnimationFrame(tick);
-    }
-
-    private stop(): void {
-        this.isRunning = false;
-        if (this.rafId) cancelAnimationFrame(this.rafId);
-    }
-
-    private syncWithScroll(): void {
+    // Recibe currentScroll directamente del Manager en el mismo frame
+    private syncWithScroll = (currentScroll: number): void => {
         const { stickyBox, heroLid, track } = this.els;
 
-        const scroll = ScrollManager.getInstance().current;
-        const progress = scroll - this.componentTopStart;
+        const progress = currentScroll - this.componentTopStart;
 
         const maxScrollDist = this.heroRiseDistance + this.trackMoveDistance;
         const tubeY = Math.min(Math.max(progress, 0), maxScrollDist);

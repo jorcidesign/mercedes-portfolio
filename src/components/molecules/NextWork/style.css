@@ -104,16 +104,55 @@
     transform: translateX(-15px);
 }
 
-/* Añade esto al final de NextWork/style.css */
-
 /* ============================================
    MÓVIL
    ============================================ */
 @media (max-width: 48em) {
 
+    /* dvh = Dynamic Viewport Height — respeta la barra del navegador en iOS Safari.
+       Esto evita que los elementos posicionados con bottom: X escapen del viewport. */
+    .m-next-work {
+        height: 100dvh;
+    }
+
+    .m-next-work__text-area {
+        /* Cambiamos a flex column para que el label y el título
+           se distribuyan con justify-content en lugar de absolute.
+           Así el título nunca puede quedar fuera de pantalla. */
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        /* label centrado verticalmente */
+        padding-bottom: 3rem;
+        /* respira al fondo */
+        box-sizing: border-box;
+    }
+
+    /* El label sale del flujo normal de flex porque ya tiene position: absolute.
+       Lo mantenemos centrado pero lo hacemos relativo al propio contenedor dvh */
+    .m-next-work__label {
+        /* Conservamos la rotación, solo nos aseguramos de que cabe */
+        font-size: clamp(2rem, 7vw, 5rem);
+    }
+
+    /* El título abandona el absolute y vuelve al flujo flex */
+    .m-next-work__title {
+        position: static;
+        transform: none;
+        margin-top: auto;
+        /* se empuja al fondo dentro del flex */
+        text-align: center;
+    }
+
+    .m-next-work__image-area {
+        height: 100dvh;
+    }
+
     /* Hacemos match con el tamaño de la foto principal del tren (75vh) */
     .m-next-work__image-area .a-image-reveal,
     .m-next-work__image-area .a-image-reveal__frame {
-        height: 75vh !important;
+        height: 75dvh !important;
     }
 }

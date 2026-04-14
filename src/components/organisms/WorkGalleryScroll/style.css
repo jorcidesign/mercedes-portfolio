@@ -132,10 +132,10 @@
 
     .o-gallery-track__item--main,
     .o-gallery-track__item--regular {
-        height: 75vh;
+        height: 75dvh;
     }
 
     .o-gallery-track__item--small {
-        height: 55vh;
+        height: 55dvh;
     }
 }
