@@ -25,7 +25,6 @@ export class ScrollManager {
     private lastTouchY: number = 0;
     private touchVelocity: number = 0;
     private lastTouchTime: number = 0;
-    private isTouching: boolean = false;
     private readonly TARGET_FPS: number = 60;
     private readonly FRAME_MS: number = 1000 / this.TARGET_FPS;
 
@@ -85,7 +84,6 @@ export class ScrollManager {
     // ─────────────────────────────────────────
 
     private onTouchStart = (e: TouchEvent): void => {
-        this.isTouching = true;
         this.touchStartY = e.touches[0].clientY;
         this.lastTouchY = this.touchStartY;
         this.touchVelocity = 0;
@@ -113,7 +111,6 @@ export class ScrollManager {
     };
 
     private onTouchEnd = (): void => {
-        this.isTouching = false;
         if (this.isLocked) return;
 
         // Inercia post-swipe — conservadora para feel elegante/editorial
