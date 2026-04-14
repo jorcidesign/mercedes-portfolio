@@ -220,7 +220,6 @@ export class ScrollOrchestrator {
         });
 
         this.resizeObserver.observe(this.els.track);
-        this.resizeObserver.observe(this.els.root);
     }
 
     // Recibe currentScroll directamente del Manager en el mismo frame

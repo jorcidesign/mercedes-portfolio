@@ -99,6 +99,7 @@ export class WorkDetailPage extends Component<WorkDetailProps> {
         if (headerEl) headerEl.classList.add('is-visible');
 
         const scroll = ScrollManager.getInstance();
+        scroll.reset(); // 🔥 FIX: Limpiamos la herencia de transform del slug anterior
         scroll.unlock();
         if (this.workData) {
             this.galleryScroll = new WorkGalleryScroll({ work: this.workData });

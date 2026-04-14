@@ -210,6 +210,15 @@ export class ScrollManager {
         this.isLocked = true;
     }
 
+    public reset(): void {
+        this.current = 0;
+        this.target = 0;
+        this.touchVelocity = 0;
+        if (this.wrapper) {
+            this.wrapper.style.transform = `translate3d(0, 0, 0)`;
+        }
+    }
+
     public destroy(): void {
         this.stop();
         this.callbacks.clear();
