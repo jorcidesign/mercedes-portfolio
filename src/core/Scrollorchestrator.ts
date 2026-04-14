@@ -41,6 +41,8 @@ export class ScrollOrchestrator {
     private touchStartY: number = 0;
     private lastTouchX: number = 0;
     private isHorizontalSwipe: boolean | null = null;
+    private touchVelocityX: number = 0;
+    private lastTouchTime: number = 0;
 
     constructor(els: OrchestratorElements, opts: OrchestratorOptions = {}) {
         this.els = els;
@@ -88,6 +90,7 @@ export class ScrollOrchestrator {
         target.addEventListener('touchstart', this.onTouchStart, { passive: true });
         // passive: false es OBLIGATORIO para poder usar e.preventDefault() en iOS
         target.addEventListener('touchmove', this.onTouchMove, { passive: false });
+        target.addEventListener('touchend', this.onTouchEnd, { passive: true });
         target.addEventListener('wheel', this.onWheel, { passive: false });
     }
 
@@ -95,6 +98,7 @@ export class ScrollOrchestrator {
         const target = this.els.stickyBox;
         target.removeEventListener('touchstart', this.onTouchStart);
         target.removeEventListener('touchmove', this.onTouchMove);
+        target.removeEventListener('touchend', this.onTouchEnd);
         target.removeEventListener('wheel', this.onWheel);
     }
 
@@ -103,6 +107,8 @@ export class ScrollOrchestrator {
         this.touchStartY = e.touches[0].clientY;
         this.lastTouchX = this.touchStartX;
         this.isHorizontalSwipe = null; // Reseteamos la intención del usuario
+        this.touchVelocityX = 0;
+        this.lastTouchTime = performance.now();
     };
 
     private onTouchMove = (e: TouchEvent): void => {
@@ -110,6 +116,7 @@ export class ScrollOrchestrator {
         const touchX = e.touches[0].clientX;
         const touchY = e.touches[0].clientY;
         const deltaX = this.lastTouchX - touchX;
+        const now = performance.now();
 
         const totalDeltaX = Math.abs(touchX - this.touchStartX);
         const totalDeltaY = Math.abs(touchY - this.touchStartY);
@@ -126,13 +133,16 @@ export class ScrollOrchestrator {
             // 🔥 Evita el comportamiento nativo de "Atrás/Adelante" en Safari
             if (e.cancelable) e.preventDefault();
 
+            // EMA: calculamos velocidad instantánea y suavizamos
+            const dt = Math.max(now - this.lastTouchTime, 8);
+            const instantVelocity = deltaX / dt * (1000 / 60); // px por frame
+            this.touchVelocityX = this.touchVelocityX * 0.6 + instantVelocity * 0.4;
+
             const sm = ScrollManager.getInstance();
 
-            // Transformamos el arrastre horizontal en avance de scroll vertical
-            // Multiplicador 1.5 para que el swipe se sienta más ligero y responsivo
-            sm.target += deltaX * 1.5;
+            // Multiplicador 1.8 para más ligereza en el arrastre
+            sm.target += deltaX * 1.8;
 
-            // Clampeamos (limitamos) para que no pueda scrollear más allá del inicio o fin de la web
             const wrapper = document.getElementById('smooth-wrapper');
             if (wrapper) {
                 const maxScroll = wrapper.scrollHeight - window.innerHeight;
@@ -140,6 +150,22 @@ export class ScrollOrchestrator {
             }
 
             this.lastTouchX = touchX;
+            this.lastTouchTime = now;
+        }
+    };
+
+    private onTouchEnd = (): void => {
+        if (!this.isHorizontalSwipe) return;
+
+        const sm = ScrollManager.getInstance();
+        // Le inyectamos la inercia (momentum) al finalizar el swipe,
+        // igual que en ScrollManager nativo.
+        sm.target += this.touchVelocityX * 5;
+
+        const wrapper = document.getElementById('smooth-wrapper');
+        if (wrapper) {
+            const maxScroll = wrapper.scrollHeight - window.innerHeight;
+            sm.target = Math.max(0, Math.min(sm.target, maxScroll));
         }
     };
 
