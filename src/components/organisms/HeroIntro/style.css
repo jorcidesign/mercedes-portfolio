@@ -132,10 +132,10 @@
     }
 
     /* ── FIRMA ASTORIMA ──
-       Zona media de la pantalla, sin interferir abajo */
+       Bajo la flecha para respetar el orden: MERCEDES → flecha → Astorima → footer */
     .o-hero-intro__signature-mount {
         right: auto;
-        top: 52dvh;
+        top: 62dvh;
         bottom: auto;
         left: 50%;
         width: 70vw;
@@ -144,10 +144,11 @@
     }
 
     /* ── FLECHA DE SCROLL ──
-       Por encima del texto footer pero debajo de la firma */
+       Centrada debajo del texto MERCEDES */
     .o-hero-intro__arrow-mount {
         left: 50%;
-        bottom: 22dvh;
+        bottom: auto;
+        top: 48dvh;
         transform: translateX(-50%);
     }
 

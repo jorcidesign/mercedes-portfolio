@@ -54,7 +54,8 @@ export class HeroTextCanvas extends Component {
         this.ctx = this.canvas.getContext('2d');
         this.prepareSegments();
         window.addEventListener('resize', this.handleResize);
-        this.handleResize();
+        // Defer first resize to next frame so iOS has painted and clientWidth is reliable
+        requestAnimationFrame(() => this.handleResize());
     }
 
     public playIntro(): Promise<void> {
@@ -203,11 +204,11 @@ export class HeroTextCanvas extends Component {
         let scaleX = 1, scaleY = 1, offsetX = 0, offsetY = 0;
 
         // ─── LÓGICA DE ESCALA ROBUSTA PARA MÓVILES Y PORTRAIT ───
-        // En iPhones reales, innerWidth puede ser unreliable en la primera carga.
-        // Usamos screen.width como fallback y también detectamos portrait.
-        const effectiveWidth = Math.min(window.innerWidth, window.screen?.width ?? window.innerWidth);
-        const isPortrait = window.innerHeight > window.innerWidth;
-        const isMobileDevice = effectiveWidth <= 850 || isPortrait;
+        // clientWidth es el ancho CSS real — fiable en iOS desde el primer frame.
+        const cssWidth = document.documentElement.clientWidth;
+        const cssHeight = document.documentElement.clientHeight;
+        const isPortrait = cssHeight > cssWidth;
+        const isMobileDevice = cssWidth <= 850 || isPortrait;
 
         if (isMobileDevice) {
             // Contained scaling: mantiene proporciones sin estirar las letras
