@@ -15,14 +15,14 @@ export class ActionGroup extends Component<ActionGroupProps> {
 
         // 1. Instanciamos el botón de contacto con su ruta (Renderizará un <a>)
         this.btnTalk = new NavButton({
-            text: 'LET\'S TALK',
+            text: 'HABLEMOS',
             variant: 'outline',
             href: '/contact'
         });
 
         // 2. Instanciamos el botón del menú sin ruta (Renderizará un <button>)
         this.btnMenu = new NavButton({
-            text: 'MENU',
+            text: 'MENÚ',
             variant: 'outline'
         });
     }

@@ -1,5 +1,3 @@
-import { ENDPOINTS } from './endpoints';
-
 export interface ContactPayload {
     name: string;
     email: string;
@@ -8,29 +6,44 @@ export interface ContactPayload {
 }
 
 export class ContactService {
+    private static readonly API_URL = 'https://api.web3forms.com/submit';
+
+    // Vite inyecta la variable del .env aquí
+    private static readonly ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
     public static async sendMessage(payload: ContactPayload): Promise<boolean> {
         try {
-            const response = await fetch(ENDPOINTS.CONTACT, {
+            const data = {
+                access_key: this.ACCESS_KEY,
+                nombre: payload.name,
+                email: payload.email,
+                telefono: payload.phone,
+                mensaje: payload.message,
+                subject: '¡Nuevo mensaje desde el Portafolio de Maquillaje!'
+            };
+
+            const response = await fetch(this.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Si en el futuro necesitas un token de API para crear registros, iría aquí:
-                    // 'Authorization': `Bearer TU_TOKEN`
+                    'Accept': 'application/json'
                 },
-                // 🔥 Strapi requiere que el cuerpo esté envuelto en un objeto "data"
-                body: JSON.stringify({ data: payload })
+                body: JSON.stringify(data)
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error('Strapi Error:', errorData);
-                throw new Error('Error al enviar el mensaje');
+            const result = await response.json();
+
+            if (response.status === 200) {
+                console.log('Mensaje enviado con éxito a Web3Forms:', result);
+                return true;
+            } else {
+                console.error('Error del servicio al enviar:', result);
+                return false;
             }
 
-            return true; // Éxito
         } catch (error) {
-            console.error('ContactService POST Error:', error);
-            return false; // Fallo
+            console.error('Error de red o de ContactService:', error);
+            return false;
         }
     }
 }

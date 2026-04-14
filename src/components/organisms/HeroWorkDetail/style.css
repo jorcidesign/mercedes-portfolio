@@ -30,26 +30,53 @@
 
 .o-hero-work-detail__title {
     font-family: var(--font-display);
-    font-size: clamp(4rem, 12vw, 15rem);
-    /* Texto gigantesco y responsivo */
-    line-height: 0.85;
+    font-size: clamp(2rem, 11vw, 3.5rem);
+    line-height: 0.92;
+    letter-spacing: clamp(-0.02em, -0.01em, 0em);
     text-transform: uppercase;
     margin: 0;
 }
 
+#hero-detail-slot-bottom .o-hero-work-detail__title {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    white-space: normal;
+}
+
+@media (min-width: 480px) {
+    .o-hero-work-detail__title {
+        font-size: clamp(3.5rem, 9vw, 6rem);
+    }
+}
+
+@media (min-width: 768px) {
+    .o-hero-work-detail__title {
+        font-size: clamp(6rem, 8vw, 10rem);
+    }
+}
+
+@media (min-width: 900px) {
+    #hero-detail-slot-bottom .o-hero-work-detail__title {
+        white-space: nowrap;
+        overflow: visible;
+        font-size: clamp(6rem, 8vw, 10rem);
+    }
+}
+
 .o-hero-work-detail__category {
     font-family: var(--font-sans);
-    font-size: 0.8rem;
+    font-size: clamp(0.65rem, 1.5vw, 0.85rem);
     font-weight: 700;
     letter-spacing: 0.2em;
+    /* tracking-widest */
     text-transform: uppercase;
+    text-align: center;
 }
 
 .o-hero-work-detail__description {
     font-family: var(--font-serif);
-    /* Como en tu diseño */
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
     line-height: 1.4;
-    max-width: 800px;
+    max-width: 65ch;
     margin: 0 auto;
+    text-align: center;
 }

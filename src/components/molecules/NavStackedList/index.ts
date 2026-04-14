@@ -13,9 +13,9 @@ export class NavStackedList extends Component<NavStackedListProps> {
         super({
             // 🔥 FIX: Rutas absolutas con el '/' al inicio
             links: [
-                { text: 'WORK', href: '/work' },
-                { text: 'SERVICES', href: '/services' },
-                { text: 'ABOUT', href: '/about' },
+                { text: 'PORTAFOLIO', href: '/work' },
+                { text: 'SERVICIOS', href: '/services' },
+                { text: 'SOBRE MÍ', href: '/about' },
                 // { text: 'BTS', href: '/bts' }
             ],
             ...props

@@ -8,6 +8,7 @@ interface NavLinkProps {
     href?: string;
     variant?: 'stacked' | 'basic';
     forceTheme?: 'light' | 'dark';
+    target?: string;
 }
 
 export class NavLink extends Component<NavLinkProps> {
@@ -20,11 +21,16 @@ export class NavLink extends Component<NavLinkProps> {
     }
 
     render(): string {
-        const { text, href, variant, forceTheme } = this.props;
+        const { text, href, variant, forceTheme, target } = this.props;
         const initialTheme = forceTheme ?? 'dark';
 
+        const isExternal = href?.startsWith('http') || href?.startsWith('mailto:') || href?.startsWith('tel:');
+        const targetAttr = target || (isExternal ? '_blank' : '_self');
+        const relAttr = targetAttr === '_blank' ? 'rel="noopener noreferrer"' : '';
+        const routerAttr = isExternal ? '' : 'data-router-link';
+
         return `
-            <a href="${href}" class="a-nav-link a-nav-link--${variant} theme-${initialTheme}" data-router-link>
+            <a href="${href}" target="${targetAttr}" ${relAttr} class="a-nav-link a-nav-link--${variant} theme-${initialTheme}" ${routerAttr}>
                 <span class="a-nav-link__text">${text}</span>
             </a>
         `;

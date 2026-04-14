@@ -39,7 +39,7 @@
     transform: translate(-50%, -50%) rotate(-90deg);
 
     font-family: var(--font-display, serif);
-    font-size: clamp(5rem, 13vw, 14rem);
+    font-size: clamp(3rem, 8vw, 8rem);
     line-height: 0.85;
     margin: 0;
     text-transform: uppercase;

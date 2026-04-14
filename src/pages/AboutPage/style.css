@@ -1,197 +1,412 @@
 /* ============================================================
-   PÁGINA — ABOUT
+   PÁGINA — ABOUT  (rediseño editorial / Ma japonés)
    ============================================================ */
 
 .p-about {
     width: 100%;
     min-height: 100vh;
-    background-color: var(--c-white, #ffffff);
-    color: var(--c-black, #000000);
+    background-color: var(--c-white, #faf9f7);
+    color: var(--c-black, #1a1a18);
     overflow-x: hidden;
 }
 
-/* ── EL HERO (Los títulos apilados) ── */
+/* ── HERO ── */
 .p-about__hero {
     width: 100%;
     padding-top: 20vh;
-    /* Un pequeño respiro abajo, pero la foto lo va a tapar parcialmente */
-    padding-bottom: 5vh;
+    padding-bottom: 4vh;
     position: relative;
     z-index: 1;
+    overflow: hidden;
+}
+
+/* Línea lateral japonesa — elemento estructural sutil */
+.p-about__hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--gutter-desktop, 100px);
+    width: 1px;
+    height: 100%;
+    background: var(--c-black, #1a1a18);
+    opacity: 0.1;
 }
 
 .p-about__hero-container {
     width: 100%;
     max-width: var(--max-width, 1440px);
     margin: 0 auto;
-    padding: 0 var(--gutter-desktop, 2.5rem);
+    padding: 0 var(--gutter-desktop, 100px);
     display: flex;
     flex-direction: column;
 }
 
-/* Base común para los títulos */
-.p-about__title .a-parallax-title {
-    /* Tamaño grotesco como en la referencia */
-    font-size: clamp(4rem, 13vw, 15rem);
+/* Etiqueta vertical estilo japón — discreta */
+.p-about__hero-index {
+    position: absolute;
+    top: 20vh;
+    right: var(--gutter-desktop, 100px);
+    font-family: var(--font-mono, 'Courier New', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    line-height: 0.8;
-    /* Súper aplastados */
+    color: var(--c-black, #1a1a18);
+    opacity: 0.3;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+.p-about__title .a-parallax-title {
+    font-size: clamp(4rem, 12vw, 14rem);
+    text-transform: uppercase;
+    line-height: 0.85;
+    letter-spacing: -0.025em;
     margin: 0;
     width: 100%;
     display: block;
 }
 
-/* Direcciones opuestas */
 .p-about__title--left .a-parallax-title {
     text-align: left;
-    letter-spacing: -0.02em;
 }
 
 .p-about__title--right .a-parallax-title {
     text-align: right;
-    /* Empujamos los de la derecha un poco para que no toquen el borde */
-    padding-right: 2vw;
+    font-style: italic;
+    /* contraste serif/itálica en el par */
+    padding-right: 1vw;
 }
 
-/* ── LA GRILLA (El contenido inferior) ── */
+/* ── CONTENIDO ── */
 .p-about__content {
     width: 100%;
     max-width: var(--max-width, 1440px);
     margin: 0 auto;
-    padding: 0 var(--gutter-desktop, 2.5rem);
+    padding: 0 var(--gutter-desktop, 100px);
     padding-bottom: 20vh;
-
     position: relative;
     z-index: 5;
-    /* Por encima de las letras gigantes */
-
-    /* 🔥 LA MAGIA: Subimos la grilla para que pise las letras */
-    margin-top: -10vh;
+    margin-top: -8vh;
+    /* foto pisa las letras */
 }
 
+/* ── SEPARADOR ENTRE SECCIONES ── */
+.p-about__divider {
+    display: block;
+    width: 1px;
+    height: 80px;
+    background: var(--c-black, #1a1a18);
+    opacity: 0.15;
+    margin: 0 auto;
+    margin-bottom: 18vh;
+}
+
+/* ── GRILLAS ── */
 .p-about__grid {
     display: grid;
-    /* Grid asimétrico: 4 fracciones para foto, 5 para texto, 1 hueco en medio */
-    grid-template-columns: 4fr 1fr 5fr;
-    align-items: flex-start;
-}
-
-/* ── COLUMNA IZQUIERDA: LA FOTO ── */
-.p-about__col-img {
-    grid-column: 1 / 2;
+    align-items: start;
+    margin-bottom: 18vh;
     position: relative;
 }
 
-/* El cuadro de color beige que va por detrás de la foto */
-.p-about__img-bg {
+.p-about__grid:last-child {
+    margin-bottom: 0;
+}
+
+/* Portrait: imagen a la izquierda */
+.p-about__grid--portrait-left {
+    grid-template-columns: 5fr 1.5fr 5.5fr;
+}
+
+/* Portrait: imagen a la derecha */
+.p-about__grid--portrait-right {
+    grid-template-columns: 5.5fr 1.5fr 5fr;
+}
+
+/* Landscape: imagen ancha a la izquierda, texto ancla abajo */
+.p-about__grid--landscape {
+    grid-template-columns: 7fr 1fr 4fr;
+    align-items: end;
+}
+
+/* ── POSICIONAMIENTO DE COLUMNAS ── */
+
+/* Portrait-left: imagen col 1, texto col 3 */
+.p-about__grid--portrait-left .p-about__col-img {
+    grid-column: 1 / 2;
+}
+
+.p-about__grid--portrait-left .p-about__col-text {
+    grid-column: 3 / 4;
+    padding-top: 12vh;
+}
+
+/* Portrait-right: imagen col 3, texto col 1 */
+.p-about__grid--portrait-right .p-about__col-img {
+    grid-column: 3 / 4;
+    grid-row: 1;
+}
+
+.p-about__grid--portrait-right .p-about__col-text {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    padding-top: 12vh;
+}
+
+/* Landscape: imagen col 1, texto col 3 (pegado abajo) */
+.p-about__grid--landscape .p-about__col-img {
+    grid-column: 1 / 2;
+}
+
+.p-about__grid--landscape .p-about__col-text {
+    grid-column: 3 / 4;
+    padding-top: 0;
+    padding-bottom: 3vh;
+}
+
+/* ── COLUMNA IMAGEN ── */
+.p-about__col-img {
+    position: relative;
+}
+
+/* Marco rediseñado: línea fina 1px + offset editorial */
+.p-about__col-img::before {
+    content: '';
     position: absolute;
-    top: 15%;
-    left: -15%;
-    width: 120%;
-    height: 100%;
-    background-color: #d8c9c3;
-    /* Tono arena/nude de la referencia */
+    top: -20px;
+    left: -20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid var(--c-black, #1a1a18);
+    opacity: 0.1;
+    pointer-events: none;
     z-index: -1;
 }
 
+/* Para grids con imagen a la derecha, el offset se invierte */
+.p-about__grid--portrait-right .p-about__col-img::before {
+    left: 20px;
+    right: -20px;
+}
+
+/* Para landscape, offset más compacto */
+.p-about__grid--landscape .p-about__col-img::before {
+    top: -12px;
+    left: -12px;
+    right: 12px;
+    bottom: 12px;
+}
+
+/* Número de sección — escrito vertical, estilo japonés */
+.p-about__section-num {
+    position: absolute;
+    font-family: var(--font-mono, 'Courier New', monospace);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--c-black, #1a1a18);
+    opacity: 0.25;
+    top: 0;
+    right: -2rem;
+    writing-mode: vertical-rl;
+    z-index: 2;
+}
+
+/* Mover el número al lado contrario cuando la imagen va a la derecha */
+.p-about__grid--portrait-right .p-about__section-num {
+    left: -2rem;
+    right: auto;
+}
+
+/* ── WRAPPERS DE IMAGEN (las proporciones clave) ── */
 .p-about__img-wrapper {
     width: 100%;
-    /* Obligamos a la foto a tener una altura editorial */
-    height: 70vh;
+    overflow: hidden;
+    display: block;
 }
 
-/* Aseguramos que el ImageReveal llene nuestro wrapper */
+/* Portrait: 3/4 editorial clásico */
+.p-about__img-wrapper--portrait {
+    aspect-ratio: var(--ar-portrait, 3 / 4);
+}
+
+/* Landscape: 4/3 natural — sin altura fija que distorsione */
+.p-about__img-wrapper--landscape {
+    aspect-ratio: 4 / 3;
+}
+
+.p-about__img-wrapper img,
 .p-about__img-wrapper .a-image-reveal,
-.p-about__img-wrapper .a-image-reveal__frame {
-    height: 100%;
-    width: 100%;
-}
-
+.p-about__img-wrapper .a-image-reveal__frame,
 .p-about__img-wrapper .a-image-reveal__img {
-    height: 100%;
     width: 100%;
+    height: 100%;
     object-fit: cover;
+    object-position: center top;
+    display: block;
 }
 
-/* ── COLUMNA DERECHA: LOS TEXTOS ── */
+/* ── COLUMNA TEXTO ── */
 .p-about__col-text {
-    grid-column: 3 / 4;
-    padding-top: 15vh;
-    /* Bajamos el texto para que la foto quede más arriba visualmente */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
+/* Línea fina + etiqueta tipo label japonés */
 .p-about__subtitle {
-    font-family: var(--font-sans, sans-serif);
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.15em;
+    font-family: var(--font-mono, 'Courier New', monospace);
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    margin-bottom: 3rem;
-    color: var(--c-black, #000);
+    color: var(--c-black, #1a1a18);
+    opacity: 0.45;
+    margin-bottom: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--c-black, #1a1a18);
+    display: block;
+    width: 100%;
 }
 
 .p-about__copy p {
-    font-family: var(--font-serif, serif);
-    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
-    line-height: 1.4;
-    margin-bottom: 2rem;
-    color: var(--c-black, #000);
+    font-family: var(--font-serif, Georgia, serif);
+    font-size: clamp(1.1rem, 1.5vw, 1.55rem);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+    color: var(--c-black, #1a1a18);
+    font-weight: 400;
 }
 
-/* Jugamos con la tipografía dentro del texto (Simulando la caligrafía) */
-.p-about__copy-highlight {
-    font-family: var(--font-serif, serif);
+.p-about__copy p:last-child {
+    margin-bottom: 0;
+}
+
+/* Estilos inline del CMS */
+.p-about__copy strong {
+    font-weight: 700;
+}
+
+.p-about__copy em {
     font-style: italic;
-    font-weight: 300;
-    /* Un ligero ajuste de tamaño para que destaque */
-    font-size: 1.1em;
 }
 
-.p-about__copy-strike {
+.p-about__copy s {
     text-decoration: line-through;
-    opacity: 0.5;
+    opacity: 0.38;
 }
 
-/* ============================================
+.p-about__copy u {
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+}
+
+/* ============================================================
    MÓVIL
-   ============================================ */
+   ============================================================ */
 @media (max-width: 48em) {
     .p-about__hero {
-        padding-top: 15vh;
+        padding-top: 14vh;
+    }
+
+    .p-about__hero::before {
+        left: var(--gutter-mobile, 15px);
+    }
+
+    .p-about__hero-index {
+        display: none;
     }
 
     .p-about__hero-container {
-        padding: 0 var(--gutter-mobile, 1.5rem);
+        padding: 0 var(--gutter-mobile, 15px);
     }
 
     .p-about__content {
-        padding: 0 var(--gutter-mobile, 1.5rem);
-        padding-bottom: 10vh;
-        /* Quitamos el solapamiento agresivo en móvil para que respire */
-        margin-top: 5vh;
+        padding: 0 var(--gutter-mobile, 15px);
+        padding-bottom: 12vh;
+        margin-top: 4vh;
     }
 
-    .p-about__grid {
+    .p-about__divider {
+        height: 50px;
+        margin-bottom: 10vh;
+    }
+
+    /* Todas las grillas colapsan a 1 columna */
+    .p-about__grid--portrait-left,
+    .p-about__grid--portrait-right,
+    .p-about__grid--landscape {
         grid-template-columns: 1fr;
         gap: 3rem;
+        margin-bottom: 10vh;
     }
 
-    .p-about__col-img {
+    .p-about__grid--portrait-left .p-about__col-img,
+    .p-about__grid--portrait-left .p-about__col-text,
+    .p-about__grid--portrait-right .p-about__col-img,
+    .p-about__grid--portrait-right .p-about__col-text,
+    .p-about__grid--landscape .p-about__col-img,
+    .p-about__grid--landscape .p-about__col-text {
         grid-column: 1 / -1;
+        grid-row: auto;
+        padding-top: 0;
+        padding-bottom: 0;
     }
 
-    .p-about__img-bg {
-        top: 5%;
-        left: -5%;
-        width: 110%;
+    .p-about__col-img::before,
+    .p-about__grid--portrait-right .p-about__col-img::before,
+    .p-about__grid--landscape .p-about__col-img::before {
+        top: -10px;
+        left: -10px;
+        right: 10px;
+        bottom: 10px;
     }
 
-    .p-about__img-wrapper {
-        height: 60vh;
+    .p-about__section-num,
+    .p-about__grid--portrait-right .p-about__section-num {
+        right: auto;
+        left: 0;
+        writing-mode: horizontal-tb;
+        top: -1.5rem;
     }
 
-    .p-about__col-text {
-        grid-column: 1 / -1;
-        padding-top: 2rem;
+    /* Portrait en móvil: más alta que landscape */
+    .p-about__img-wrapper--portrait {
+        aspect-ratio: 3 / 4;
+    }
+
+    .p-about__img-wrapper--landscape {
+        aspect-ratio: 4 / 3;
+    }
+}
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+@media (min-width: 48em) and (max-width: 64em) {
+
+    .p-about__hero-container,
+    .p-about__content {
+        padding: 0 var(--gutter-tablet, 35px);
+    }
+
+    .p-about__hero::before {
+        left: var(--gutter-tablet, 35px);
+    }
+
+    .p-about__hero-index {
+        right: var(--gutter-tablet, 35px);
+    }
+
+    .p-about__grid--portrait-left,
+    .p-about__grid--portrait-right {
+        grid-template-columns: 1fr 0.5fr 1.2fr;
+    }
+
+    .p-about__grid--landscape {
+        grid-template-columns: 3fr 0.5fr 2fr;
+    }
+
+    .p-about__title .a-parallax-title {
+        font-size: clamp(3.5rem, 10vw, 8rem);
     }
 }

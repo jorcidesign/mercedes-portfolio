@@ -30,7 +30,7 @@ export class NextWork extends Component<NextWorkProps> {
         return `
             <a href="/work/${nextWork.slug}" class="m-next-work" id="next-work-trigger">
                 <div class="m-next-work__text-area">
-                    <h2 class="m-next-work__label">Next<br>Album</h2>
+                    <h2 class="m-next-work__label">Siguiente<br>Trabajo</h2>
                     <p class="m-next-work__title">${nextWork.title}</p>
                 </div>
                 

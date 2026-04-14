@@ -8,7 +8,6 @@ import './style.css';
 
 export class HeroCanvas extends Component {
     private ratioUniformLocation!: WebGLUniformLocation | null;
-    private imageAspect: number = 1.5;
     private canvas!: HTMLCanvasElement;
     private gl!: WebGLRenderingContext;
     private rafId: number = 0;
@@ -21,7 +20,7 @@ export class HeroCanvas extends Component {
     private images: string[] = [];
     private displacementMapUrl = 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=800&q=80';
 
-    private textures: WebGLTexture[] = [];
+    private textureData: Array<{ texture: WebGLTexture; aspect: number }> = [];
     private dispTexture!: WebGLTexture;
 
     private currentIndex: number = 0;
@@ -173,23 +172,23 @@ export class HeroCanvas extends Component {
      */
     private async loadAllTextures(): Promise<void> {
         const imageUrls = this.images.length > 0 ? this.images : [];
-
         const allUrls = [...imageUrls, this.displacementMapUrl];
 
         const loaded = await Promise.all(allUrls.map(url => this.loadTexture(url)));
 
-        // Las primeras N son imágenes del carrusel, la última es el displacement map
-        this.textures = loaded.slice(0, imageUrls.length);
-        this.dispTexture = loaded[loaded.length - 1];
+        // Las primeras N son del carrusel — guardamos texture Y aspect juntos
+        this.textureData = loaded.slice(0, imageUrls.length);
+        // La última es el displacement map — solo necesitamos la textura
+        this.dispTexture = loaded[loaded.length - 1].texture;
     }
 
-    private loadTexture(url: string): Promise<WebGLTexture> {
+    private loadTexture(url: string): Promise<{ texture: WebGLTexture; aspect: number }> {
         return new Promise(resolve => {
             const image = new Image();
             image.crossOrigin = 'anonymous';
             image.src = url;
             image.onload = () => {
-                this.imageAspect = image.width / image.height;
+                const aspect = image.width / image.height; // ← propio de esta imagen
 
                 const gl = this.gl;
                 const texture = gl.createTexture()!;
@@ -199,20 +198,29 @@ export class HeroCanvas extends Component {
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
                 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
                 gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-                resolve(texture);
+                resolve({ texture, aspect });
             };
-            // FIX: en caso de error también resolvemos para no bloquear el Promise.all
             image.onerror = () => {
                 console.warn(`[HeroCanvas] No se pudo cargar textura: ${url}`);
-                resolve(this.createSolidTexture(20, 20, 20, 255));
+                resolve({ texture: this.createSolidTexture(20, 20, 20, 255), aspect: 1.5 });
             };
         });
     }
 
+    private computeRatio(imageAspect: number): [number, number] {
+        const canvasAspect = this.gl.canvas.width / this.gl.canvas.height;
+        // "object-fit: cover" — siempre llena el canvas sin deformar
+        if (canvasAspect > imageAspect) {
+            return [1.0, imageAspect / canvasAspect];
+        } else {
+            return [canvasAspect / imageAspect, 1.0];
+        }
+    }
+
     private startTransition(): void {
-        if (this.isTransitioning || this.textures.length < 2) return;
+        if (this.isTransitioning || this.textureData.length < 2) return;
         this.isTransitioning = true;
-        this.nextIndex = (this.currentIndex + 1) % this.textures.length;
+        this.nextIndex = (this.currentIndex + 1) % this.textureData.length;
     }
 
     private easeInOutCubic(t: number): number {
@@ -220,7 +228,7 @@ export class HeroCanvas extends Component {
     }
 
     private renderLoop(time: number): void {
-        if (!this.gl || !this.program || this.textures.length === 0) return;
+        if (!this.gl || !this.program || this.textureData.length === 0) return;
 
         const deltaTime = time - this.lastTime;
         this.lastTime = time;
@@ -235,12 +243,11 @@ export class HeroCanvas extends Component {
                     this.isIntroReveal = false;
                     this.currentIndex = 0;
 
-                    // FIX: limpiamos la referencia antes de llamarla
                     const resolve = this.resolveFadeIn;
                     this.resolveFadeIn = null;
                     if (resolve) resolve();
 
-                    if (this.textures.length > 1) {
+                    if (this.textureData.length > 1) {
                         this.registerInterval(() => this.startTransition(), 5000);
                     }
                 } else {
@@ -254,15 +261,25 @@ export class HeroCanvas extends Component {
         const gl = this.gl;
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
-        const canvasAspect = gl.canvas.width / gl.canvas.height;
+        // ── ASPECT RATIO INTERPOLADO ──────────────────────────────────────────
+        // Durante intro: interpola desde ratio 1:1 (pantalla negra) hasta tex[0]
+        // Durante transición: interpola entre aspect del current y el next
         let ratioX = 1.0;
         let ratioY = 1.0;
 
-        if (canvasAspect > this.imageAspect) {
-            ratioY = this.imageAspect / canvasAspect;
-        } else {
-            ratioX = canvasAspect / this.imageAspect;
+        if (this.isIntroReveal && this.textureData.length > 0) {
+            // Negro no tiene aspect propio → interpolamos hacia el aspect de tex[0]
+            const [tx, ty] = this.computeRatio(this.textureData[0].aspect);
+            ratioX = 1.0 + (tx - 1.0) * easedProgress;
+            ratioY = 1.0 + (ty - 1.0) * easedProgress;
+        } else if (!this.isWaitingForIntro && this.textureData.length > 0) {
+            const [ax, ay] = this.computeRatio(this.textureData[this.currentIndex].aspect);
+            const nextIdx = this.textureData[this.nextIndex] ? this.nextIndex : this.currentIndex;
+            const [bx, by] = this.computeRatio(this.textureData[nextIdx].aspect);
+            ratioX = ax + (bx - ax) * easedProgress;
+            ratioY = ay + (by - ay) * easedProgress;
         }
+        // ─────────────────────────────────────────────────────────────────────
 
         gl.uniform2f(this.ratioUniformLocation, ratioX, ratioY);
         gl.uniform1f(this.progressUniformLocation, easedProgress);
@@ -276,12 +293,13 @@ export class HeroCanvas extends Component {
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, this.blackTexture);
             gl.activeTexture(gl.TEXTURE1);
-            gl.bindTexture(gl.TEXTURE_2D, this.textures[0]);
+            gl.bindTexture(gl.TEXTURE_2D, this.textureData[0].texture);
         } else {
             gl.activeTexture(gl.TEXTURE0);
-            gl.bindTexture(gl.TEXTURE_2D, this.textures[this.currentIndex]);
+            gl.bindTexture(gl.TEXTURE_2D, this.textureData[this.currentIndex].texture);
+            const next = this.textureData[this.nextIndex] ?? this.textureData[0];
             gl.activeTexture(gl.TEXTURE1);
-            gl.bindTexture(gl.TEXTURE_2D, this.textures[this.nextIndex] || this.textures[0]);
+            gl.bindTexture(gl.TEXTURE_2D, next.texture);
         }
 
         gl.activeTexture(gl.TEXTURE2);
@@ -300,14 +318,13 @@ export class HeroCanvas extends Component {
     }
 
     override onDestroy(): void {
-        // FIX: cancelamos la promise pendiente para que no llame a un componente muerto
         this.resolveFadeIn = null;
-
         window.removeEventListener('resize', this.handleResize);
         if (this.rafId) cancelAnimationFrame(this.rafId);
 
         if (this.gl) {
-            this.textures.forEach(tex => this.gl.deleteTexture(tex));
+            // ← antes era this.textures.forEach(...)
+            this.textureData.forEach(d => this.gl.deleteTexture(d.texture));
             if (this.dispTexture) this.gl.deleteTexture(this.dispTexture);
             if (this.blackTexture) this.gl.deleteTexture(this.blackTexture);
             if (this.positionBuffer) this.gl.deleteBuffer(this.positionBuffer);

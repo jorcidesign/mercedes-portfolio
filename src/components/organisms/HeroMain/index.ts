@@ -11,7 +11,7 @@ export class HeroMain extends Component {
 
         // 1. Instanciamos los Átomos con sus configuraciones independientes
         this.titleTop = new ParallaxTitle({
-            text: 'LATEST &',
+            text: 'LO ÚLTIMO',
             font: 'sans',
             speed: 0.15, // Sube rápido
 
@@ -20,7 +20,7 @@ export class HeroMain extends Component {
         });
 
         this.titleBottom = new ParallaxTitle({
-            text: 'GREATEST',
+            text: 'LO MEJOR',
             font: 'serif',
             fontStyle: 'italic',
             speed: 0.05, // Sube lento

@@ -24,6 +24,7 @@ export class HeroWorkDetail extends Component<HeroWorkDetailProps> {
             text: topText,
             font: 'sans',
             speed: 0.15,
+            align: 'center',
             customClass: 'o-hero-work-detail__title'
         });
 
@@ -33,6 +34,7 @@ export class HeroWorkDetail extends Component<HeroWorkDetailProps> {
                 font: 'serif',
                 fontStyle: 'italic',
                 speed: 0.05,
+                align: 'center',
                 customClass: 'o-hero-work-detail__title'
             });
         }

@@ -45,7 +45,7 @@ export class WorkCard extends Component<WorkCardProps> {
         // 3. Instanciamos el Botón
         // 🔥 Refactorización: Le pasamos el href directamente para que sea 100% semántico
         this.btnViewAlbum = new NavButton({
-            text: 'VIEW ALBUM',
+            text: 'VER ÁLBUM',
             variant: 'bracket',
             href: `/work/${slug}`
         });

@@ -13,10 +13,10 @@ export class Footer extends Component {
 
         // ── ENLACES PRINCIPALES (Estáticos) ──
         const menuItems = [
-            { text: 'Work', href: '/work' },
-            { text: 'Services', href: '/services' },
-            { text: 'About', href: '/about' },
-            { text: 'Contact', href: '/contact' }
+            { text: 'Portafolio', href: '/work' },
+            { text: 'Servicios', href: '/services' },
+            { text: 'Sobre mí', href: '/about' },
+            { text: 'Contacto', href: '/contact' }
         ];
 
         menuItems.forEach(item => {
@@ -65,7 +65,7 @@ export class Footer extends Component {
                         </div>
 
                         <div class="o-footer__info-group">
-                            <h3 class="o-footer__label">SOCIALS</h3>
+                            <h3 class="o-footer__label">REDES SOCIALES</h3>
                             <nav class="o-footer__social-nav" id="footer-socials-container">
                             </nav>
                         </div>

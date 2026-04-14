@@ -17,11 +17,11 @@ export class NavDrawer extends Component<NavDrawerProps> {
         super(props);
 
         const mainMenu = [
-            { text: 'HOME', href: '/' },
-            { text: 'WORK', href: '/work' },
-            { text: 'SERVICES', href: '/services' },
-            { text: 'ABOUT', href: '/about' },
-            { text: 'CONTACT', href: '/contact' }
+            { text: 'INICIO', href: '/' },
+            { text: 'PORTAFOLIO', href: '/work' },
+            { text: 'SERVICIOS', href: '/services' },
+            { text: 'SOBRE MÍ', href: '/about' },
+            { text: 'CONTACTO', href: '/contact' }
         ];
 
         mainMenu.forEach(item => {
@@ -46,7 +46,7 @@ export class NavDrawer extends Component<NavDrawerProps> {
                 </nav>
                 
                 <footer class="o-nav-drawer__footer">
-                    <span class="o-nav-drawer__footer-label">SOCIALS:</span>
+                    <span class="o-nav-drawer__footer-label">REDES SOCIALES:</span>
                     <div class="o-nav-drawer__socials" id="drawer-socials-slot"></div>
                 </footer>
             </aside>

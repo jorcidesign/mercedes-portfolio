@@ -14,7 +14,7 @@ export class WorkGalleryHome extends Component {
         return `
             <section class="o-work-gallery-home" id="work-gallery">
                 <div class="o-work-gallery-home__header">
-                    <h2 class="o-work-gallery-home__title">SELECTED WORK</h2>
+                    <h2 class="o-work-gallery-home__title">TRABAJOS DESTACADOS</h2>
                 </div>
                 
                 <div class="o-work-gallery-home__grid" id="work-gallery-grid">

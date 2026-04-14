@@ -71,12 +71,12 @@ export class HeaderGlobal extends Component {
         this.isMenuOpen = !this.isMenuOpen;
 
         if (this.isMenuOpen) {
-            this.actionGroup.setMenuText('CLOSE');
+            this.actionGroup.setMenuText('CERRAR');
             this.navDrawer.open();
             // 🔥 LA MAGIA: Solo inyectamos una bandera visual de estado
             this.element?.classList.add('is-drawer-open');
         } else {
-            this.actionGroup.setMenuText('MENU');
+            this.actionGroup.setMenuText('MENÚ');
             this.navDrawer.close();
             // 🔥 Removemos la bandera visual
             this.element?.classList.remove('is-drawer-open');
@@ -85,7 +85,7 @@ export class HeaderGlobal extends Component {
     // 🔥 NUEVO MÉTODO: Sincroniza el estado del Header cuando el Drawer se cierra por cualquier motivo
     private syncMenuStateClosed(): void {
         this.isMenuOpen = false;
-        this.actionGroup.setMenuText('MENU');
+        this.actionGroup.setMenuText('MENÚ');
         this.element?.classList.remove('is-drawer-open');
     }
     public fadeIn(): void {
