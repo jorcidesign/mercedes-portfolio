@@ -11,7 +11,7 @@
 
     /* Sizing explícito: Cubre toda la pantalla en todo momento */
     width: 100vw;
-    height: var(--vh, 100vh);
+    height: 100dvh;
     /* Usa tu token de 100dvh para móviles */
 
     /* Tokens de capa y blending */

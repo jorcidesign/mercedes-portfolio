@@ -202,12 +202,18 @@ export class HeroTextCanvas extends Component {
 
         let scaleX = 1, scaleY = 1, offsetX = 0, offsetY = 0;
 
-        if (window.innerWidth <= 768) {
+        // ─── LÓGICA DE ESCALA ROBUSTA PARA MÓVILES Y PORTRAIT ───
+        if (window.innerWidth <= 850 || window.innerHeight > window.innerWidth) {
+            // Contained scaling (mantener proporciones y evitar estirar las letras)
             const scale = Math.min(this.rectWidth / this.originalWidth, this.rectHeight / this.originalHeight);
-            scaleX = scale; scaleY = scale;
+            // Reducimos un poco más en móviles por el centrado puro
+            const mobileScale = scale * 0.95;
+            scaleX = mobileScale;
+            scaleY = mobileScale;
             offsetX = (this.rectWidth - (this.originalWidth * scaleX)) / 2;
             offsetY = (this.rectHeight - (this.originalHeight * scaleY)) / 2;
         } else {
+            // Stretch mode 
             scaleX = this.rectWidth / this.originalWidth;
             scaleY = this.rectHeight / this.originalHeight;
         }

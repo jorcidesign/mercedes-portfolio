@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     z-index: var(--z-intro);
     background-color: #000;
     overflow: hidden;
@@ -147,7 +147,7 @@
         right: auto;
         top: auto;
         left: 50%;
-        bottom: 6vh;
+        bottom: 14dvh;
         transform: translateX(-50%);
         text-align: center;
         width: auto;
