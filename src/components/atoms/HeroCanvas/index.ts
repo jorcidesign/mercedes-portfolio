@@ -60,8 +60,7 @@ export class HeroCanvas extends Component {
 
         this.setupWebGL();
 
-        // FIX: esperamos TODAS las texturas críticas antes de arrancar el loop.
-        // dispTexture es necesaria desde el frame 0 — sin ella el shader explota.
+        // Esperamos TODAS las texturas críticas antes de arrancar el loop.
         await this.loadAllTextures();
 
         this.blackTexture = this.createSolidTexture(0, 0, 0, 255);
@@ -100,6 +99,8 @@ export class HeroCanvas extends Component {
             }
         `;
 
+        // 🔥 SHADER MEJORADO: Aquí está la magia fluida estilo "Evagher"
+        // No toca el encuadre (u_ratio), solo suaviza el desplazamiento
         const fsSource = `
             precision mediump float;
             varying vec2 v_uv;
@@ -108,15 +109,27 @@ export class HeroCanvas extends Component {
             uniform sampler2D u_disp;
             uniform float u_progress;
             uniform vec2 u_ratio;
+
             void main() {
+                // Cálculo de encuadre intacto
                 vec2 uv = (v_uv - 0.5) * u_ratio + 0.5;
+                
+                // Textura de desplazamiento
                 vec4 disp = texture2D(u_disp, uv);
-                float effect = disp.r * u_progress;
-                float inverseEffect = disp.r * (1.0 - u_progress);
-                vec2 uv1 = uv + vec2(effect, 0.0);
-                vec2 uv2 = uv - vec2(inverseEffect, 0.0);
+                
+                // 1. Centramos el mapa (-0.5) para que distorsione equitativamente
+                // 2. Control de intensidad (0.3 es ideal para que no se rompa la imagen)
+                float intensity = 0.3;
+                float displacement = (disp.r - 0.5) * intensity;
+                
+                // Cálculo direccional suave
+                vec2 uv1 = uv + vec2(displacement * u_progress, 0.0);
+                vec2 uv2 = uv + vec2(displacement * (u_progress - 1.0), 0.0);
+                
                 vec4 t1 = texture2D(u_texture1, uv1);
                 vec4 t2 = texture2D(u_texture2, uv2);
+                
+                // Mix con el progreso
                 gl_FragColor = mix(t1, t2, u_progress);
             }
         `;
@@ -161,20 +174,13 @@ export class HeroCanvas extends Component {
         return shader;
     }
 
-    /**
-     * FIX: ahora espera TODAS las texturas (incluida dispTexture) en paralelo.
-     * Antes: textura[0] en serie → resto en background sin await → dispTexture podía
-     * llegar después del primer frame causando un shader error silencioso.
-     */
     private async loadAllTextures(): Promise<void> {
         const imageUrls = this.images.length > 0 ? this.images : [];
         const allUrls = [...imageUrls, this.displacementMapUrl];
 
         const loaded = await Promise.all(allUrls.map(url => this.loadTexture(url)));
 
-        // Las primeras N son del carrusel — guardamos texture Y aspect juntos
         this.textureData = loaded.slice(0, imageUrls.length);
-        // La última es el displacement map — solo necesitamos la textura
         this.dispTexture = loaded[loaded.length - 1].texture;
     }
 
@@ -184,8 +190,7 @@ export class HeroCanvas extends Component {
             image.crossOrigin = 'anonymous';
             image.src = url;
             image.onload = () => {
-                const aspect = image.width / image.height; // ← propio de esta imagen
-
+                const aspect = image.width / image.height;
                 const gl = this.gl;
                 const texture = gl.createTexture()!;
                 gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -205,7 +210,6 @@ export class HeroCanvas extends Component {
 
     private computeRatio(imageAspect: number): [number, number] {
         const canvasAspect = this.gl.canvas.width / this.gl.canvas.height;
-        // "object-fit: cover" — siempre llena el canvas sin deformar
         if (canvasAspect > imageAspect) {
             return [1.0, imageAspect / canvasAspect];
         } else {
@@ -224,13 +228,14 @@ export class HeroCanvas extends Component {
     }
 
     private renderLoop(time: number): void {
-        this.checkResize(); // 🔥 FIX: Mide cada frame para no depender del timing del CSS
+        this.checkResize();
         if (!this.gl || !this.program || this.textureData.length === 0) return;
 
         const deltaTime = time - this.lastTime;
         this.lastTime = time;
 
         if (this.isIntroReveal || this.isTransitioning) {
+            // Tiempo exacto que definiste
             this.progress += deltaTime * 0.00042;
 
             if (this.progress >= 1.0) {
@@ -258,14 +263,10 @@ export class HeroCanvas extends Component {
         const gl = this.gl;
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
-        // ── ASPECT RATIO INTERPOLADO ──────────────────────────────────────────
-        // Durante intro: interpola desde ratio 1:1 (pantalla negra) hasta tex[0]
-        // Durante transición: interpola entre aspect del current y el next
         let ratioX = 1.0;
         let ratioY = 1.0;
 
         if (this.isIntroReveal && this.textureData.length > 0) {
-            // Negro no tiene aspect propio → interpolamos hacia el aspect de tex[0]
             const [tx, ty] = this.computeRatio(this.textureData[0].aspect);
             ratioX = 1.0 + (tx - 1.0) * easedProgress;
             ratioY = 1.0 + (ty - 1.0) * easedProgress;
@@ -276,7 +277,6 @@ export class HeroCanvas extends Component {
             ratioX = ax + (bx - ax) * easedProgress;
             ratioY = ay + (by - ay) * easedProgress;
         }
-        // ─────────────────────────────────────────────────────────────────────
 
         gl.uniform2f(this.ratioUniformLocation, ratioX, ratioY);
         gl.uniform1f(this.progressUniformLocation, easedProgress);
@@ -322,7 +322,6 @@ export class HeroCanvas extends Component {
         if (this.rafId) cancelAnimationFrame(this.rafId);
 
         if (this.gl) {
-            // ← antes era this.textures.forEach(...)
             this.textureData.forEach(d => this.gl.deleteTexture(d.texture));
             if (this.dispTexture) this.gl.deleteTexture(this.dispTexture);
             if (this.blackTexture) this.gl.deleteTexture(this.blackTexture);
