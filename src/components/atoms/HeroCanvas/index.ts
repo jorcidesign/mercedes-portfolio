@@ -51,10 +51,6 @@ export class HeroCanvas extends Component {
         }
         this.gl = gl;
 
-        this.handleResize = this.handleResize.bind(this);
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
-
         const fetchedImages = await HeroService.getHeroImages();
         if (fetchedImages.length > 0) {
             this.images = fetchedImages;
@@ -228,6 +224,7 @@ export class HeroCanvas extends Component {
     }
 
     private renderLoop(time: number): void {
+        this.checkResize(); // 🔥 FIX: Mide cada frame para no depender del timing del CSS
         if (!this.gl || !this.program || this.textureData.length === 0) return;
 
         const deltaTime = time - this.lastTime;
@@ -309,17 +306,19 @@ export class HeroCanvas extends Component {
         this.rafId = requestAnimationFrame(this.renderLoop.bind(this));
     }
 
-    private handleResize(): void {
-        if (!this.canvas) return;
-        const rect = this.element!.getBoundingClientRect();
+    private checkResize(): void {
         const dpr = window.devicePixelRatio || 1;
-        this.canvas.width = rect.width * dpr;
-        this.canvas.height = rect.height * dpr;
+        const displayWidth = Math.floor(this.element!.clientWidth * dpr);
+        const displayHeight = Math.floor(this.element!.clientHeight * dpr);
+
+        if (this.canvas.width !== displayWidth || this.canvas.height !== displayHeight) {
+            this.canvas.width = displayWidth;
+            this.canvas.height = displayHeight;
+        }
     }
 
     override onDestroy(): void {
         this.resolveFadeIn = null;
-        window.removeEventListener('resize', this.handleResize);
         if (this.rafId) cancelAnimationFrame(this.rafId);
 
         if (this.gl) {
