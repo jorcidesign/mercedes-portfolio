@@ -34,6 +34,7 @@ export class ScrollOrchestrator {
     private hasTriggeredEnd: boolean = false;
 
     private resizeObserver: ResizeObserver | null = null;
+    private resizeDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
     // 🔥 Variables de Fricción Táctil
     private touchStartX: number = 0;
@@ -58,6 +59,14 @@ export class ScrollOrchestrator {
 
         // 🔥 Nos suscribimos al frame exacto del ScrollManager — sin RAF propio
         ScrollManager.getInstance().onUpdate(this.syncWithScroll);
+
+        // 2º recálculo diferido: cubre el caso de que las imágenes de Cloudinary
+        // terminaron de pintar sus dimensiones reales DESPUÉS del primer init.
+        // Crítico en slugs con muchas fotos sobre conexión móvil lenta.
+        setTimeout(() => {
+            this.hasTriggeredEnd = false;
+            this.calculateDimensions();
+        }, 500);
     }
 
     public destroy(): void {
@@ -65,6 +74,7 @@ export class ScrollOrchestrator {
         this.unbindEvents();
         this.resizeObserver?.disconnect();
         this.resizeObserver = null;
+        if (this.resizeDebounceTimer) clearTimeout(this.resizeDebounceTimer);
     }
 
     // ─────────────────────────────────────────────
@@ -170,30 +180,43 @@ export class ScrollOrchestrator {
 
         await Promise.race([
             Promise.all(loadPromises),
-            new Promise<void>(res => setTimeout(res, 1500)),
+            // 3000ms — margen para imágenes grandes de Cloudinary en móvil lento
+            new Promise<void>(res => setTimeout(res, 3000)),
         ]);
+    }
+
+    private getViewportHeight(): number {
+        // visualViewport siempre devuelve el alto REAL sin la barra dinámica de Safari.
+        // Fallback a window.innerHeight para navegadores que no lo soporten.
+        return window.visualViewport?.height ?? window.innerHeight;
     }
 
     private calculateDimensions(): void {
         const { root, track } = this.els;
 
+        const vh = this.getViewportHeight();
         const scroll = ScrollManager.getInstance().current;
         const rect = root.getBoundingClientRect();
 
         this.componentTopStart = rect.top + scroll;
-        this.heroRiseDistance = window.innerHeight;
+        this.heroRiseDistance = vh;
 
         const trackWidth = track.scrollWidth;
         this.trackMoveDistance = Math.max(trackWidth - window.innerWidth, 0);
 
         const totalHeight = this.heroRiseDistance + this.trackMoveDistance;
-        root.style.height = `${totalHeight + window.innerHeight}px`;
+        root.style.height = `${totalHeight + vh}px`;
     }
 
     private bindResize(): void {
+        // Debounce de 150ms: evita que la barra dinámica de Safari dispare
+        // recálculos en cascada cuando aparece/desaparece mientras se scrollea.
         this.resizeObserver = new ResizeObserver(() => {
-            this.hasTriggeredEnd = false;
-            this.calculateDimensions();
+            if (this.resizeDebounceTimer) clearTimeout(this.resizeDebounceTimer);
+            this.resizeDebounceTimer = setTimeout(() => {
+                this.hasTriggeredEnd = false;
+                this.calculateDimensions();
+            }, 150);
         });
 
         this.resizeObserver.observe(this.els.track);
