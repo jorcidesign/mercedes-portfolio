@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tu-dominio-aqui.com/sitemap.xml
+Sitemap: https://mercedes-portfolio-ten.vercel.app/sitemap.xml
