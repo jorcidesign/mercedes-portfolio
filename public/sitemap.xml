@@ -1,23 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
   <url>
-    <loc>https://tu-dominio-aqui.com/</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://mercedes-portfolio-ten.vercel.app/</loc>
+    <lastmod>2026-04-21</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://tu-dominio-aqui.com/work</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/about</loc>
+    <lastmod>2026-04-21</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tu-dominio-aqui.com/about</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://mercedes-portfolio-ten.vercel.app/services</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/contact</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work/glamour-sofisticado-viemuriel</loc>
+    <lastmod>2026-04-21</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://tu-dominio-aqui.com/contact</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work/resplandor-natural-daniela</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work/elegancia-atemporal-cehila</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work/vanguardia-y-color-frida</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work/ensueno-nupcial-katia</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work/espiritu-libre-martha</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work/esencia-mercedes-astorima</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mercedes-portfolio-ten.vercel.app/work/luz-perfeccion-naysha</loc>
+    <lastmod>2026-04-21</lastmod>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
