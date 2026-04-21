@@ -8,10 +8,9 @@ export interface SEOMetadata {
 }
 
 export class SEOManager {
-    // Valores de Fallback (Mercedes Astorima)
-    private static readonly DEFAULT_TITLE = "Mercedes Astorima | Portfolio";
-    private static readonly DEFAULT_DESC = "Portfolio oficial de Mercedes Astorima. Dirección de Arte, Diseño y Creatividad.";
-
+  // 🔥 Valores de Fallback actualizados con palabras clave estratégicas
+    private static readonly DEFAULT_TITLE = "Mercedes Astorima | Maquillaje Profesional";
+    private static readonly DEFAULT_DESC = "Portafolio oficial de Mercedes Astorima. Servicios de maquillaje para novias, social y editorial.";
     // 🔥 Dinamizamos las URLs usando la variable de entorno de Vite
     private static readonly BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5173";
     private static readonly DEFAULT_IMAGE = `${this.BASE_URL}/og-image-default.jpg`;
