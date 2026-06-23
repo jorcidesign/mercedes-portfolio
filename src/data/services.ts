@@ -25,7 +25,7 @@ export const servicesData: ServiceData[] = [
             'Colocación de pestañas postizas'
         ],
         price: 'Desde $250 USD', // 🔥 Agregamos el precio
-        imageUrl: 'https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?auto=format&fit=crop&w=800&q=80',
+        imageUrl: 'https://res.cloudinary.com/dhlkqt62w/image/upload/v1782253248/511f6c1b-b4eb-42ef-83b6-82f4117c2b58.png',
         imageAlt: 'Maquillaje de novia elegante y natural'
     },
     {
@@ -57,7 +57,7 @@ export const servicesData: ServiceData[] = [
             'Dossier digital con recomendaciones'
         ],
         price: '$150 USD / Sesión', // 🔥 Agregamos el precio
-        imageUrl: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800&q=80',
+        imageUrl: 'https://res.cloudinary.com/dhlkqt62w/image/upload/v1782258608/1b75da40-b414-4698-b36f-dc04768c31e6.png',
         imageAlt: 'Clases de automaquillaje y brochas'
     }
 ];
